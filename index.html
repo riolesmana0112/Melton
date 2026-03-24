@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halo Melton</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
+      color: white;
+      position: relative;
+    }
+
+    .bg-stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.8); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 700px;
+      padding: 50px 30px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      text-align: center;
+    }
+
+    .small-text {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 8vw, 5rem);
+      font-weight: 700;
+      color: #f8fafc;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto 30px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .menu-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 170px;
+      padding: 15px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .menu-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .menu-btn.primary {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border: none;
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+    }
+
+    .menu-btn.primary:hover {
+      filter: brightness(1.06);
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      color: rgba(203, 213, 225, 0.8);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 40px 20px;
+        border-radius: 24px;
+      }
+
+      .menu-btn {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-stars" id="bgStars"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="small-text">A little space made for melton only</div>
+      <h1>Halo Melton</h1>
+      <p class="subtitle">
+        Boleh dipilih dulu<br>
+      </p>
+
+      <div class="button-group">
+        <a href="lagu.html" class="menu-btn primary">Lagu</a>
+        <a href="game.html" class="menu-btn">Game</a>
+      </div>
+
+      <div class="footer-note"></div>
+    </div>
+  </div>
+
+  <script>
+    const bgStars = document.getElementById("bgStars");
+
+    function createBackgroundStars() {
+      for (let i = 0; i < 70; i++) {
+        const s = document.createElement("div");
+        s.classList.add("bg-star");
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.top = Math.random() * 100 + "vh";
+        s.style.animationDelay = (Math.random() * 3) + "s";
+        s.style.opacity = Math.random();
+        bgStars.appendChild(s);
+      }
+    }
+
+    createBackgroundStars();
+  </script>
+</body>
+</html>

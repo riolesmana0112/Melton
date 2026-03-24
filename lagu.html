@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mel's Playlist Corner</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
+      color: white;
+      position: relative;
+    }
+
+    .bg-stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.8); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .top-bar {
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .main-card {
+      width: 100%;
+      max-width: 980px;
+      padding: 34px 24px 28px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #cbd5e1;
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 650px;
+      margin: 0 auto 26px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .playlist-btn {
+      border: none;
+      cursor: pointer;
+      min-width: 170px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .playlist-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .playlist-btn.active {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border: none;
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+    }
+
+    .preview-card {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 720px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 26px;
+      padding: 28px 22px;
+      text-align: left;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .mood-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+    }
+
+    .preview-title {
+      font-size: clamp(1.5rem, 4vw, 2.3rem);
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .preview-text {
+      color: #cbd5e1;
+      line-height: 1.8;
+      margin-bottom: 22px;
+      font-size: 1rem;
+    }
+
+    .spotify-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1DB954, #1ed760);
+      font-weight: 700;
+      transition: 0.3s ease;
+      box-shadow: 0 12px 28px rgba(29, 185, 84, 0.28);
+    }
+
+    .spotify-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.05);
+    }
+
+    .tiny-note {
+      margin-top: 18px;
+      color: rgba(203, 213, 225, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
+      .main-card {
+        padding: 28px 16px 22px;
+        border-radius: 24px;
+      }
+
+      .playlist-btn {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .preview-card {
+        padding: 22px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-stars" id="bgStars"></div>
+
+  <div class="container">
+    <div class="top-bar">
+      <a href="index.html" class="back-btn">← Back</a>
+    </div>
+
+    <div class="main-card">
+      <div class="eyebrow"></div>
+      <h1>Mel's Playlist Corner 🎵</h1>
+      <p class="subtitle">
+Hi Melton boleh dipilih sesuai mood kamu ya!
+      </p>
+
+      <div class="button-group">
+        <button class="playlist-btn active" onclick="showPlaylist('happy')">Happy Mel</button>
+        <button class="playlist-btn" onclick="showPlaylist('sad')">Sad Mel</button>
+        <button class="playlist-btn" onclick="showPlaylist('focus')">Focus Mel</button>
+      </div>
+
+      <div class="preview-card">
+        <div class="mood-badge" id="moodBadge">☀️ happy mode</div>
+        <h2 class="preview-title" id="previewTitle">Happy Mel</h2>
+        <p class="preview-text" id="previewText">
+          YEY your happy, keep being happy ok always be happy.
+        </p>
+                <p class="preview-text" id="previewText">
+*ada note di spotifynya juga loh*
+        </p>
+        <a class="spotify-btn" id="spotifyLink" href="https://open.spotify.com/playlist/24fqDeT1KewZ8VYCpMRmNE?si=42d1a91886234d55&pt=21572e685b31036ff7f9ab3813f5216e" target="_blank">
+          Open in Spotify
+        </a>
+
+        <div class="tiny-note">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bgStars = document.getElementById("bgStars");
+
+    function createBackgroundStars() {
+      for (let i = 0; i < 70; i++) {
+        const s = document.createElement("div");
+        s.classList.add("bg-star");
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.top = Math.random() * 100 + "vh";
+        s.style.animationDelay = (Math.random() * 3) + "s";
+        s.style.opacity = Math.random();
+        bgStars.appendChild(s);
+      }
+    }
+    createBackgroundStars();
+
+    const playlists = {
+      happy: {
+        badge: "☀️ happy mode",
+        title: "Happy Mel",
+        text: "YEY your happy, keep being happy ok always be happy.",
+        link: "https://open.spotify.com/playlist/24fqDeT1KewZ8VYCpMRmNE?si=42d1a91886234d55&pt=21572e685b31036ff7f9ab3813f5216e"
+      },
+      sad: {
+        badge: "🌙 slow mode",
+        title: "Sad Mel",
+        text: "What happened? Kalo mau cerita bole chat aja tapi harus sambil denger lagu ini ya.",
+        link: "https://open.spotify.com/playlist/0NIID9hWvC7kNB3lrVTmiL?si=76d397b04a0647a0&pt=03113e97d1104aa18d1528958532dbfb"
+      },
+      focus: {
+        badge: "🪐 focus mode",
+        title: "Focus Mel",
+        text: "Semangat nugasnya melton semoga bisa bantu fokus ya lagunya.",
+        link: "https://open.spotify.com/playlist/0NIID9hWvC7kNB3lrVTmiL?si=5a7af6b0381945f0&pt=4a4ff5edc35c3585fadb392e13b7b4b3"
+      }
+    };
+
+    const moodBadge = document.getElementById("moodBadge");
+    const previewTitle = document.getElementById("previewTitle");
+    const previewText = document.getElementById("previewText");
+    const spotifyLink = document.getElementById("spotifyLink");
+    const buttons = document.querySelectorAll(".playlist-btn");
+
+    function showPlaylist(type) {
+      const data = playlists[type];
+
+      moodBadge.textContent = data.badge;
+      previewTitle.textContent = data.title;
+      previewText.textContent = data.text;
+      spotifyLink.href = data.link;
+
+      buttons.forEach(btn => btn.classList.remove("active"));
+
+      if (type === "happy") buttons[0].classList.add("active");
+      if (type === "sad") buttons[1].classList.add("active");
+      if (type === "focus") buttons[2].classList.add("active");
+    }
+  </script>
+</body>
+</html>
