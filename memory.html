@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Memory Flip 🧠</title>
+  <title>Memory Sakura Flip 🌸</title>
   <style>
     * {
       margin: 0;
@@ -15,8 +15,11 @@
     body {
       min-height: 100vh;
       overflow-x: hidden;
-      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
-      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 230, 0.35), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(255, 182, 193, 0.22), transparent 30%),
+        linear-gradient(180deg, #fff7fb, #ffe4ee, #ffd6e7, #ffc8dd);
+      color: #7a3556;
       position: relative;
     }
 
@@ -30,16 +33,29 @@
 
     .bg-star {
       position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      animation: twinkle 3s infinite ease-in-out;
+      top: -10vh;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff7fb, #ffb7d5 70%);
+      border-radius: 70% 0 70% 0;
+      opacity: 0.85;
+      filter: blur(0.2px);
+      animation: fall linear infinite;
+      transform: rotate(45deg);
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.8); }
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) translateX(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(115vh) translateX(80px) rotate(320deg);
+        opacity: 0.15;
+      }
     }
 
     .container {
@@ -67,22 +83,25 @@
     .back-btn,
     .restart-btn {
       text-decoration: none;
-      color: white;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #8a3d63;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       padding: 10px 18px;
       border-radius: 999px;
       transition: 0.3s ease;
       backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 8px 24px rgba(204, 102, 153, 0.12);
       cursor: pointer;
       font-size: 0.95rem;
+      font-weight: 600;
     }
 
     .back-btn:hover,
     .restart-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.2);
     }
 
     .title {
@@ -95,13 +114,13 @@
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 700;
       letter-spacing: 1px;
-      color: #f8fafc;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      color: #8a3d63;
+      text-shadow: 0 0 18px rgba(255, 182, 193, 0.25);
       margin-bottom: 8px;
     }
 
     .title p {
-      color: #cbd5e1;
+      color: #a85b81;
       font-size: 1rem;
       line-height: 1.8;
     }
@@ -115,36 +134,36 @@
     }
 
     .stat-box {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       padding: 12px 18px;
       border-radius: 18px;
       min-width: 120px;
       text-align: center;
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 30px rgba(204, 102, 153, 0.12);
     }
 
     .stat-label {
       font-size: 0.85rem;
-      color: #cbd5e1;
+      color: #a85b81;
       margin-bottom: 5px;
     }
 
     .stat-value {
       font-size: 1.4rem;
       font-weight: bold;
-      color: #ffffff;
+      color: #8a2f5b;
     }
 
     .game-wrap {
       width: min(92vw, 900px);
       border-radius: 28px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       overflow: hidden;
       backdrop-filter: blur(12px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 20px 60px rgba(204, 102, 153, 0.16);
       padding: 22px;
       position: relative;
       min-height: 500px;
@@ -195,33 +214,34 @@
       justify-content: center;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 10px 30px rgba(204, 102, 153, 0.12);
     }
 
     .card-front {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(99, 102, 241, 0.18));
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #e2e8f0;
+      background: linear-gradient(135deg, rgba(255, 214, 231, 0.55), rgba(255, 183, 213, 0.45));
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      color: #9a4f75;
       font-size: 1.8rem;
+      font-weight: 700;
     }
 
     .card-back {
       transform: rotateY(180deg);
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       font-size: clamp(2rem, 5vw, 3rem);
     }
 
     .card.matched .card-back {
       box-shadow:
-        0 0 22px rgba(99, 102, 241, 0.28),
-        0 0 40px rgba(56, 189, 248, 0.18);
+        0 0 18px rgba(255, 182, 193, 0.28),
+        0 0 34px rgba(255, 105, 180, 0.16);
     }
 
     .helper {
       margin-top: 18px;
       text-align: center;
-      color: rgba(203, 213, 225, 0.85);
+      color: rgba(181, 101, 139, 0.85);
       font-size: 0.92rem;
       line-height: 1.8;
     }
@@ -235,7 +255,7 @@
       text-align: center;
       padding: 20px;
       z-index: 5;
-      background: rgba(15, 23, 42, 0.58);
+      background: rgba(255, 240, 246, 0.48);
       backdrop-filter: blur(8px);
     }
 
@@ -244,41 +264,43 @@
     }
 
     .overlay-card {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.58);
       padding: 30px 24px;
       border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.78);
       max-width: 420px;
       width: 100%;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 16px 40px rgba(204, 102, 153, 0.14);
     }
 
     .overlay-card h2 {
       font-size: 1.8rem;
       margin-bottom: 10px;
-      color: #ffffff;
+      color: #8a2f5b;
     }
 
     .overlay-card p {
-      color: #cbd5e1;
+      color: #a85b81;
       margin-bottom: 18px;
       line-height: 1.8;
     }
 
     .play-btn {
       border: none;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: white;
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      color: #8a2f5b;
       padding: 14px 28px;
       border-radius: 999px;
       font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: 0.3s ease;
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.18);
     }
 
     .play-btn:hover {
       transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.22);
     }
 
     @media (max-width: 700px) {
@@ -341,7 +363,7 @@
     </div>
 
     <div class="title">
-      <h1>Memory Flip 🧠</h1>
+      <h1>Memory Sakura Flip 🌸</h1>
       <p>Match all the pairs with the fewest moves possible.</p>
     </div>
 
@@ -365,9 +387,10 @@
 
       <div class="overlay" id="overlay">
         <div class="overlay-card">
-          <h2>Ready? ✨</h2>
+          <h2>Ready? 🌸</h2>
           <p>
-            Match all 4 pairs.<br>
+            Match all 4 pairs!<br>
+            Cute brain flex mode activated.
           </p>
           <button class="play-btn" id="startBtn">Play now</button>
         </div>
@@ -375,7 +398,7 @@
     </div>
 
     <div class="helper">
-      tiny brain flex, but make it classy
+      tiny brain flex, but make it sakura 🌸
     </div>
   </div>
 
@@ -388,7 +411,7 @@
     const overlay = document.getElementById("overlay");
     const restartBtn = document.getElementById("restartBtn");
 
-    const symbols = ["🌙", "⭐", "☁️", "🪐"];
+    const symbols = ["🌸", "🎀", "🩷", "✨"];
     const totalPairs = symbols.length;
 
     let cardsData = [];
@@ -403,13 +426,14 @@
     bestEl.textContent = bestScore ? bestScore : "—";
 
     function createBackgroundStars() {
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < 35; i++) {
         const s = document.createElement("div");
         s.classList.add("bg-star");
         s.style.left = Math.random() * 100 + "vw";
-        s.style.top = Math.random() * 100 + "vh";
-        s.style.animationDelay = (Math.random() * 3) + "s";
-        s.style.opacity = Math.random();
+        s.style.animationDuration = (6 + Math.random() * 8) + "s";
+        s.style.animationDelay = (Math.random() * 6) + "s";
+        s.style.opacity = 0.45 + Math.random() * 0.5;
+        s.style.transform = `rotate(${35 + Math.random() * 40}deg) scale(${0.8 + Math.random() * 0.8})`;
         bgStars.appendChild(s);
       }
     }
@@ -436,7 +460,7 @@
 
       card.innerHTML = `
         <div class="card-inner">
-          <div class="card-face card-front">✦</div>
+          <div class="card-face card-front">✿</div>
           <div class="card-face card-back">${symbol}</div>
         </div>
       `;
@@ -454,7 +478,6 @@
         board.appendChild(card);
       });
 
-      // FORCE browser reflow biar board langsung kebaca render
       void board.offsetHeight;
     }
 
@@ -483,9 +506,10 @@
       overlay.classList.remove("hidden");
       overlay.innerHTML = `
         <div class="overlay-card">
-          <h2>Ready? ✨</h2>
+          <h2>Ready? 🌸</h2>
           <p>
             Match all 4 pairs!<br>
+            Cute brain flex mode activated.
           </p>
           <button class="play-btn" id="startBtn">Play now</button>
         </div>
@@ -497,17 +521,17 @@
     function startGame() {
       gameStarted = true;
       resetStateOnly();
-      renderBoard();      // render fresh board
-      enableBoard();      // langsung bisa main
+      renderBoard();
+      enableBoard();
       overlay.classList.add("hidden");
     }
 
     function resetToReady() {
       gameStarted = false;
       resetStateOnly();
-      renderBoard();      // board langsung muncul
-      disableBoard();     // tapi belum bisa dipencet
-      showReadyOverlay(); // tunggu Play now
+      renderBoard();
+      disableBoard();
+      showReadyOverlay();
     }
 
     function flipCard(card) {
@@ -571,13 +595,13 @@
 
       let message = "Clean win 👀";
       if (moves <= 6) {
-        message = "Actually insane. Brain too powerful 🧠✨";
+        message = "Actually insane. Sakura brain too powerful 🌸🧠";
       } else if (moves <= 8) {
         message = "Very solid memory. Respect 😮‍💨";
       } else if (moves <= 10) {
         message = "Okayyy not bad at all 😌";
       } else {
-        message = "Still a win. We take those 😎";
+        message = "Still a win. We take those 🌸";
       }
 
       if (!bestScore || moves < Number(bestScore)) {
@@ -589,7 +613,7 @@
       overlay.classList.remove("hidden");
       overlay.innerHTML = `
         <div class="overlay-card">
-          <h2>All matched! 🎉</h2>
+          <h2>All matched! 🌸</h2>
           <p>
             You finished in <strong>${moves}</strong> moves.<br>
             ${message}
@@ -604,7 +628,7 @@
     restartBtn.addEventListener("click", resetToReady);
 
     createBackgroundStars();
-    resetToReady(); // INITIAL LOAD -> board langsung ada, no need klik restart
+    resetToReady();
   </script>
 </body>
 </html>
