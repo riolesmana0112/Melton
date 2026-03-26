@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dodge the Comets ☄️</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Dodge the Comets 🚀</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -18,6 +20,7 @@
       background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
       color: white;
       position: relative;
+      user-select: none;
     }
 
     .bg-stars {
@@ -49,104 +52,148 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 18px 16px 40px;
     }
 
     .top-bar {
       width: 100%;
-      max-width: 920px;
+      max-width: 760px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      justify-content: flex-start;
+      margin-bottom: 14px;
     }
 
-    .back-btn,
-    .restart-btn {
+    .back-btn {
       text-decoration: none;
       color: white;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 10px 18px;
       border-radius: 999px;
-      transition: 0.3s ease;
+      transition: all 0.3s ease;
       backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-      cursor: pointer;
-      font-size: 0.95rem;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
     }
 
-    .back-btn:hover,
-    .restart-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+    .back-btn:hover {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
     }
 
-    .title {
+    .main-card {
+      width: 100%;
+      max-width: 760px;
+      padding: 22px 14px 24px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
       text-align: center;
-      margin-top: 6px;
-      margin-bottom: 10px;
     }
 
-    .title h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #f8fafc;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+    .eyebrow {
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       margin-bottom: 8px;
     }
 
-    .title p {
+    h1 {
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 8px;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+    }
+
+    .subtitle {
       color: #cbd5e1;
-      font-size: 1rem;
-      line-height: 1.8;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 18px;
     }
 
     .stats {
-      display: flex;
-      gap: 15px;
-      margin: 18px 0 20px;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .stat-box {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 12px 18px;
-      border-radius: 18px;
-      min-width: 120px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      padding: 14px 10px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.16);
     }
 
     .stat-label {
       font-size: 0.85rem;
       color: #cbd5e1;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .stat-value {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #ffffff;
+      font-size: clamp(1.1rem, 4vw, 1.8rem);
+      font-weight: 700;
+      color: #fff;
     }
 
     .game-wrap {
       position: relative;
-      width: min(92vw, 920px);
-      height: min(64vh, 560px);
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto 18px;
+    }
+
+    .game-area {
+      position: relative;
+      width: 100%;
+      height: 620px;
       border-radius: 28px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(99,102,241,0.08), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(56,189,248,0.08), transparent 35%),
+        rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.02), 0 18px 45px rgba(0,0,0,0.2);
+    }
+
+    /* ROKET BALIK KAYAK TADI */
+    .rocket {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      font-size: 32px;
+      line-height: 42px;
+      text-align: center;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 5;
+      filter: drop-shadow(0 0 10px rgba(99,102,241,0.35));
+      transition: transform 0.05s linear;
+      pointer-events: none;
+    }
+
+    .comet {
+      position: absolute;
+      width: 26px;
+      height: 58px;
+      font-size: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(35deg);
+      pointer-events: none;
+      opacity: 0.95;
+      filter: drop-shadow(0 0 10px rgba(56,189,248,0.35));
     }
 
     .overlay {
@@ -155,11 +202,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       padding: 20px;
-      z-index: 10;
-      background: rgba(15, 23, 42, 0.58);
-      backdrop-filter: blur(8px);
+      z-index: 20;
+      background: rgba(0,0,0,0.08);
+      backdrop-filter: blur(2px);
     }
 
     .overlay.hidden {
@@ -167,146 +213,37 @@
     }
 
     .overlay-card {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 30px 24px;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      max-width: 430px;
       width: 100%;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+      max-width: 560px;
+      padding: 26px 20px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.26);
+      backdrop-filter: blur(12px);
     }
 
-    .overlay-card h2 {
-      font-size: 1.8rem;
+    .overlay-title {
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      font-weight: 700;
       margin-bottom: 10px;
-      color: #ffffff;
     }
 
-    .overlay-card p {
-      color: #cbd5e1;
-      margin-bottom: 18px;
+    .overlay-text {
+      color: #dbe5f3;
       line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 18px;
     }
 
     .play-btn {
       border: none;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: white;
-      padding: 14px 28px;
+      cursor: pointer;
+      min-width: 180px;
+      padding: 14px 24px;
       border-radius: 999px;
       font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
-    }
-
-    .play-btn:hover {
-      transform: translateY(-2px) scale(1.03);
-    }
-
-    /* ===== PLAYER SHIP FIXED AGAIN ===== */
-    .player {
-      position: absolute;
-      left: 50%;
-      bottom: 42px; /* DI NAIKIN BIAR GA KE-CROP */
-      width: 42px;
-      height: 56px; /* lebih proporsional */
-      z-index: 6;
-      transform: translateX(-50%);
-      transition: left 0.06s linear;
-      pointer-events: none;
-      filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));
-    }
-
-    .ship-core {
-      position: absolute;
-      left: 50%;
-      bottom: 12px;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 34px;
-      background: linear-gradient(180deg, #e2e8f0, #94a3b8);
-      border-radius: 50% 50% 40% 40%;
-      clip-path: polygon(50% 0%, 100% 55%, 75% 100%, 25% 100%, 0% 55%);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-    }
-
-    .ship-window {
-      position: absolute;
-      left: 50%;
-      top: 8px;
-      transform: translateX(-50%);
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #dbeafe, #60a5fa);
-      box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
-    }
-
-    .ship-fin-left,
-    .ship-fin-right {
-      position: absolute;
-      bottom: 14px;
-      width: 9px;
-      height: 14px;
-      background: linear-gradient(180deg, #fb7185, #e11d48);
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    }
-
-    .ship-fin-left {
-      left: 6px;
-      transform: rotate(-12deg);
-    }
-
-    .ship-fin-right {
-      right: 6px;
-      transform: rotate(12deg);
-    }
-
-    .ship-flame {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 10px;
-      height: 14px;
-      background: linear-gradient(180deg, #fde68a, #f97316);
-      clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
-      animation: flameFlicker 0.18s infinite alternate;
-      filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.4));
-    }
-
-    @keyframes flameFlicker {
-      0% { transform: translateX(-50%) scaleY(1); opacity: 0.9; }
-      100% { transform: translateX(-50%) scaleY(0.8); opacity: 1; }
-    }
-
-    .comet {
-      position: absolute;
-      top: -50px;
-      font-size: 1.8rem;
-      z-index: 4;
-      user-select: none;
-      pointer-events: none;
-      filter: drop-shadow(0 0 12px rgba(255, 180, 120, 0.35));
-    }
-
-    .controls {
-      margin-top: 18px;
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .control-btn {
-      border: none;
-      cursor: pointer;
-      min-width: 110px;
-      padding: 14px 18px;
-      border-radius: 999px;
-      font-size: 1rem;
-      font-weight: 700;
+      font-weight: 600;
       color: white;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.16);
@@ -315,67 +252,92 @@
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
     }
 
-    .control-btn:hover {
-      transform: translateY(-3px) scale(1.03);
-      background: rgba(255, 255, 255, 0.18);
+    .play-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
     }
 
-    .helper {
-      margin-top: 14px;
-      text-align: center;
-      color: rgba(203, 213, 225, 0.85);
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .ctrl-btn {
+      border: none;
+      cursor: pointer;
+      min-width: 150px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .ctrl-btn:hover,
+    .ctrl-btn.active {
+      transform: translateY(-3px) scale(1.05);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+    }
+
+    .bottom-note {
+      color: rgba(203, 213, 225, 0.9);
       font-size: 0.92rem;
       line-height: 1.8;
     }
 
-    @media (max-width: 700px) {
-      .game-wrap {
-        height: 58vh;
+    @media (max-width: 768px) {
+      .game-area {
+        height: 560px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .main-card {
+        padding: 18px 10px 20px;
         border-radius: 24px;
       }
 
+      .stats {
+        gap: 10px;
+      }
+
       .stat-box {
-        min-width: 100px;
-        padding: 10px 14px;
+        padding: 12px 8px;
+        border-radius: 18px;
       }
 
-      .stat-value {
-        font-size: 1.2rem;
+      .game-area {
+        height: 500px;
+        border-radius: 24px;
       }
 
-      .player {
+      .rocket {
         width: 38px;
-        height: 52px;
-        bottom: 38px; /* mobile juga dinaikin */
-      }
-
-      .ship-core {
-        width: 24px;
-        height: 30px;
-      }
-
-      .ship-window {
-        width: 8px;
-        height: 8px;
-      }
-
-      .ship-fin-left,
-      .ship-fin-right {
-        width: 8px;
-        height: 12px;
-      }
-
-      .ship-flame {
-        width: 9px;
-        height: 12px;
+        height: 38px;
+        font-size: 28px;
+        line-height: 38px;
       }
 
       .comet {
-        font-size: 1.6rem;
+        width: 22px;
+        height: 50px;
+        font-size: 30px;
       }
 
-      .control-btn {
-        min-width: 120px;
+      .ctrl-btn {
+        min-width: 135px;
       }
     }
   </style>
@@ -386,87 +348,72 @@
   <div class="container">
     <div class="top-bar">
       <a href="game.html" class="back-btn">← Back</a>
-      <button class="restart-btn" id="restartBtn">Restart</button>
     </div>
 
-    <div class="title">
-      <h1>Dodge the Comets ☄️</h1>
-      <p>Move left and right. Survive the tiny cosmic chaos.</p>
-    </div>
+    <div class="main-card">
+      <div class="eyebrow">tiny arcade survival</div>
+      <h1>Dodge the Comets 🚀</h1>
+      <p class="subtitle">Move left & right. Survive as long as possible.<br>Starts chill. Then slowly gets rude.</p>
 
-    <div class="stats">
-      <div class="stat-box">
-        <div class="stat-label">Time</div>
-        <div class="stat-value" id="time">0.0s</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Dodged</div>
-        <div class="stat-value" id="dodged">0</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Best</div>
-        <div class="stat-value" id="best">0.0s</div>
-      </div>
-    </div>
-
-    <div class="game-wrap" id="gameArea">
-      <div class="player" id="player">
-        <div class="ship-core">
-          <div class="ship-window"></div>
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-label">Time</div>
+          <div class="stat-value" id="timeStat">0.0s</div>
         </div>
-        <div class="ship-fin-left"></div>
-        <div class="ship-fin-right"></div>
-        <div class="ship-flame"></div>
-      </div>
-
-      <div class="overlay" id="overlay">
-        <div class="overlay-card">
-          <h2>Ready? ☄️</h2>
-          <p>
-            Dodge the falling comets as long as you can.<br>
-            Keyboard: ← → or A / D
-          </p>
-          <button class="play-btn" id="startBtn">Play now</button>
+        <div class="stat-box">
+          <div class="stat-label">Dodged</div>
+          <div class="stat-value" id="dodgedStat">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Best</div>
+          <div class="stat-value" id="bestStat">0.0s</div>
         </div>
       </div>
-    </div>
 
-    <div class="controls">
-      <button class="control-btn" id="leftBtn">← Left</button>
-      <button class="control-btn" id="rightBtn">Right →</button>
-    </div>
+      <div class="game-wrap">
+        <div class="game-area" id="gameArea">
+          <!-- ROKET BALIK KAYAK TADI -->
+          <div class="rocket" id="rocket">🛸</div>
 
-    <div class="helper">
-      mobile friendly + keyboard friendly = elite tiny arcade
+          <div class="overlay" id="startOverlay">
+            <div class="overlay-card">
+              <div class="overlay-title">Ready? 🚀</div>
+              <div class="overlay-text">
+                Dodge the comets.<br>
+                Starts easy, gets harder slowly.<br>
+                No laggy meteor apocalypse this time 😌
+              </div>
+              <button class="play-btn" id="startBtn">Play now</button>
+            </div>
+          </div>
+
+          <div class="overlay hidden" id="gameOverOverlay">
+            <div class="overlay-card">
+              <div class="overlay-title">Game over ☄️</div>
+              <div class="overlay-text" id="gameOverText">
+                You survived 0.0s<br>
+                Dodged: 0
+              </div>
+              <button class="play-btn" id="restartBtn">Play again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl-btn" id="leftBtn">← Left</button>
+        <button class="ctrl-btn" id="rightBtn">Right →</button>
+      </div>
+
+      <div class="bottom-note">
+        mobile friendly + keyboard friendly = elite tiny arcade
+      </div>
     </div>
   </div>
 
   <script>
+    // ===== Background stars =====
     const bgStars = document.getElementById("bgStars");
-    const gameArea = document.getElementById("gameArea");
-    const player = document.getElementById("player");
-    const overlay = document.getElementById("overlay");
-    const restartBtn = document.getElementById("restartBtn");
-    const leftBtn = document.getElementById("leftBtn");
-    const rightBtn = document.getElementById("rightBtn");
-    const timeEl = document.getElementById("time");
-    const dodgedEl = document.getElementById("dodged");
-    const bestEl = document.getElementById("best");
-
-    let gameRunning = false;
-    let playerX = 0;
-    let playerWidth = 42;
-    let comets = [];
-    let spawnInterval = null;
-    let animationFrame = null;
-    let timerInterval = null;
-    let elapsedTime = 0;
-    let dodged = 0;
-    let startTime = 0;
-
-    let bestTime = parseFloat(localStorage.getItem("dodgeCometsBest")) || 0;
-    bestEl.textContent = bestTime.toFixed(1) + "s";
-
     function createBackgroundStars() {
       for (let i = 0; i < 70; i++) {
         const s = document.createElement("div");
@@ -478,260 +425,302 @@
         bgStars.appendChild(s);
       }
     }
+    createBackgroundStars();
 
-    function resetPlayer() {
-      const areaWidth = gameArea.clientWidth;
-      playerWidth = player.offsetWidth || 42;
-      playerX = (areaWidth - playerWidth) / 2;
-      player.style.left = playerX + "px";
-      player.style.transform = "none";
+    // ===== Elements =====
+    const gameArea = document.getElementById("gameArea");
+    const rocketEl = document.getElementById("rocket");
+    const timeStat = document.getElementById("timeStat");
+    const dodgedStat = document.getElementById("dodgedStat");
+    const bestStat = document.getElementById("bestStat");
+
+    const startOverlay = document.getElementById("startOverlay");
+    const gameOverOverlay = document.getElementById("gameOverOverlay");
+    const gameOverText = document.getElementById("gameOverText");
+    const startBtn = document.getElementById("startBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    const leftBtn = document.getElementById("leftBtn");
+    const rightBtn = document.getElementById("rightBtn");
+
+    // ===== Game state =====
+    let gameRunning = false;
+    let animationId = null;
+    let lastFrameTime = 0;
+    let startTime = 0;
+    let lastSpawnTime = 0;
+    let elapsed = 0;
+
+    let moveLeft = false;
+    let moveRight = false;
+
+    let dodged = 0;
+    let best = parseFloat(localStorage.getItem("cometBestTime") || "0");
+
+    // Rocket position
+    let rocketX = 0;
+    let rocketSpeed = 360; // px per second
+
+    // Comets array
+    let comets = [];
+
+    // ===== Difficulty tuning (ANTI LAG VERSION) =====
+    function getDifficulty(seconds) {
+      return {
+        spawnInterval: Math.max(520, 1250 - seconds * 35),
+        cometSpeed: Math.min(420, 150 + seconds * 10),
+        maxComets: Math.min(8, 4 + Math.floor(seconds / 8))
+      };
     }
 
-    function movePlayer(direction) {
-      if (!gameRunning) return;
+    function updateBestUI() {
+      bestStat.textContent = best.toFixed(1) + "s";
+    }
+    updateBestUI();
 
-      const areaWidth = gameArea.clientWidth;
-      const step = Math.max(24, areaWidth * 0.06);
+    function getAreaWidth() {
+      return gameArea.clientWidth;
+    }
 
-      if (direction === "left") {
-        playerX -= step;
-      } else {
-        playerX += step;
+    function getAreaHeight() {
+      return gameArea.clientHeight;
+    }
+
+    function resetRocket() {
+      rocketX = (getAreaWidth() / 2) - (rocketEl.offsetWidth / 2);
+      rocketEl.style.left = rocketX + "px";
+      rocketEl.style.bottom = "18px";
+    }
+
+    function createComet() {
+      const diff = getDifficulty(elapsed);
+
+      if (comets.length >= diff.maxComets) return;
+
+      const cometEl = document.createElement("div");
+      cometEl.className = "comet";
+      cometEl.textContent = "☄️";
+
+      const width = 26;
+      const x = Math.random() * (getAreaWidth() - width);
+      const speed = diff.cometSpeed + Math.random() * 45;
+
+      const comet = {
+        el: cometEl,
+        x,
+        y: -60,
+        width,
+        height: 58,
+        speed,
+        counted: false
+      };
+
+      cometEl.style.left = x + "px";
+      cometEl.style.top = comet.y + "px";
+
+      gameArea.appendChild(cometEl);
+      comets.push(comet);
+    }
+
+    function removeComet(index) {
+      if (comets[index] && comets[index].el && comets[index].el.parentNode) {
+        comets[index].el.parentNode.removeChild(comets[index].el);
       }
-
-      if (playerX < 0) playerX = 0;
-      if (playerX > areaWidth - playerWidth) playerX = areaWidth - playerWidth;
-
-      player.style.left = playerX + "px";
+      comets.splice(index, 1);
     }
 
-    function showReadyOverlay() {
-      overlay.classList.remove("hidden");
-      overlay.innerHTML = `
-        <div class="overlay-card">
-          <h2>Ready? ☄️</h2>
-          <p>
-            Dodge the falling comets as long as you can.<br>
-            Keyboard: ← → or A / D
-          </p>
-          <button class="play-btn" id="startBtn">Play now</button>
-        </div>
-      `;
+    function clearAllComets() {
+      for (const comet of comets) {
+        if (comet.el && comet.el.parentNode) {
+          comet.el.parentNode.removeChild(comet.el);
+        }
+      }
+      comets = [];
+    }
 
-      document.getElementById("startBtn").addEventListener("click", startGame);
+    function rectsOverlap(a, b) {
+      return (
+        a.x < b.x + b.width &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y
+      );
+    }
+
+    function getRocketRect() {
+      return {
+        x: rocketX + 6,
+        y: getAreaHeight() - 18 - rocketEl.offsetHeight + 8,
+        width: rocketEl.offsetWidth - 12,
+        height: rocketEl.offsetHeight - 10
+      };
     }
 
     function startGame() {
-      clearRunningStuffOnly();
+      clearAllComets();
 
       gameRunning = true;
-      elapsedTime = 0;
       dodged = 0;
-      timeEl.textContent = "0.0s";
-      dodgedEl.textContent = "0";
-      overlay.classList.add("hidden");
-
-      removeAllComets();
-      resetPlayer();
-
+      elapsed = 0;
+      lastFrameTime = performance.now();
       startTime = performance.now();
+      lastSpawnTime = performance.now();
 
-      timerInterval = setInterval(() => {
-        if (!gameRunning) return;
-        elapsedTime = (performance.now() - startTime) / 1000;
-        timeEl.textContent = elapsedTime.toFixed(1) + "s";
-      }, 100);
+      timeStat.textContent = "0.0s";
+      dodgedStat.textContent = "0";
 
-      spawnInterval = setInterval(() => {
-        spawnComet();
-      }, 520);
+      startOverlay.classList.add("hidden");
+      gameOverOverlay.classList.add("hidden");
 
-      animationFrame = requestAnimationFrame(updateGame);
-    }
+      resetRocket();
 
-    function spawnComet() {
-      if (!gameRunning) return;
-
-      const comet = document.createElement("div");
-      comet.className = "comet";
-      comet.textContent = "☄️";
-
-      const areaWidth = gameArea.clientWidth;
-      const x = Math.random() * (areaWidth - 36);
-      const speed = Math.random() * 2.2 + 3.2;
-
-      comet.style.left = x + "px";
-      comet.style.top = "-40px";
-
-      gameArea.appendChild(comet);
-
-      comets.push({
-        el: comet,
-        x,
-        y: -40,
-        speed,
-        width: 30,
-        height: 30,
-        counted: false
-      });
-    }
-
-    function updateGame() {
-      if (!gameRunning) return;
-
-      const areaHeight = gameArea.clientHeight;
-
-      /* collision area roket disesuaikan sama posisi baru */
-      const playerRect = {
-        x: playerX + 6,
-        y: areaHeight - 42 - player.offsetHeight + 8,
-        width: player.offsetWidth - 12,
-        height: player.offsetHeight - 14
-      };
-
-      for (let i = comets.length - 1; i >= 0; i--) {
-        const comet = comets[i];
-
-        const difficultyBoost = Math.min(elapsedTime * 0.015, 1.8);
-        comet.y += comet.speed + difficultyBoost;
-        comet.el.style.top = comet.y + "px";
-
-        const cometRect = {
-          x: comet.x,
-          y: comet.y,
-          width: comet.width,
-          height: comet.height
-        };
-
-        if (isColliding(playerRect, cometRect)) {
-          endGame();
-          return;
-        }
-
-        if (!comet.counted && comet.y > areaHeight) {
-          comet.counted = true;
-          dodged++;
-          dodgedEl.textContent = dodged;
-        }
-
-        if (comet.y > areaHeight + 60) {
-          comet.el.remove();
-          comets.splice(i, 1);
-        }
-      }
-
-      animationFrame = requestAnimationFrame(updateGame);
-    }
-
-    function isColliding(a, b) {
-      return !(
-        a.x + a.width < b.x ||
-        a.x > b.x + b.width ||
-        a.y + a.height < b.y ||
-        a.y > b.y + b.height
-      );
+      cancelAnimationFrame(animationId);
+      animationId = requestAnimationFrame(gameLoop);
     }
 
     function endGame() {
       gameRunning = false;
-      clearRunningStuffOnly();
+      cancelAnimationFrame(animationId);
 
-      elapsedTime = (performance.now() - startTime) / 1000;
-      timeEl.textContent = elapsedTime.toFixed(1) + "s";
-
-      if (elapsedTime > bestTime) {
-        bestTime = elapsedTime;
-        localStorage.setItem("dodgeCometsBest", bestTime.toFixed(1));
-        bestEl.textContent = bestTime.toFixed(1) + "s";
+      if (elapsed > best) {
+        best = elapsed;
+        localStorage.setItem("cometBestTime", best.toString());
+        updateBestUI();
       }
 
-      let message = "Tiny chaos survived 😮‍💨";
-      if (elapsedTime >= 25) {
-        message = "Nahh that was elite. Actual space pilot behavior 🚀";
-      } else if (elapsedTime >= 18) {
-        message = "Okayyy reflexes kinda crazy 👀";
-      } else if (elapsedTime >= 10) {
-        message = "Solid run not gonna lie 😌";
-      } else if (elapsedTime < 5) {
-        message = "That comet had personal beef 😭";
-      }
-
-      overlay.classList.remove("hidden");
-      overlay.innerHTML = `
-        <div class="overlay-card">
-          <h2>Game over ☄️</h2>
-          <p>
-            You survived <strong>${elapsedTime.toFixed(1)}s</strong><br>
-            Dodged: <strong>${dodged}</strong><br>
-            ${message}
-          </p>
-          <button class="play-btn" id="playAgainBtn">Play again</button>
-        </div>
+      gameOverText.innerHTML = `
+        You survived <strong>${elapsed.toFixed(1)}s</strong><br>
+        Dodged: <strong>${dodged}</strong><br>
+        Solid run not gonna lie 😌
       `;
 
-      document.getElementById("playAgainBtn").addEventListener("click", resetToReady);
+      gameOverOverlay.classList.remove("hidden");
     }
 
-    function clearRunningStuffOnly() {
-      clearInterval(spawnInterval);
-      clearInterval(timerInterval);
-      cancelAnimationFrame(animationFrame);
+    function gameLoop(timestamp) {
+      if (!gameRunning) return;
+
+      const dt = Math.min((timestamp - lastFrameTime) / 1000, 0.032);
+      lastFrameTime = timestamp;
+      elapsed = (timestamp - startTime) / 1000;
+
+      const diff = getDifficulty(elapsed);
+
+      if (moveLeft) rocketX -= rocketSpeed * dt;
+      if (moveRight) rocketX += rocketSpeed * dt;
+
+      const maxX = getAreaWidth() - rocketEl.offsetWidth;
+      rocketX = Math.max(0, Math.min(maxX, rocketX));
+      rocketEl.style.left = rocketX + "px";
+
+      if (timestamp - lastSpawnTime >= diff.spawnInterval) {
+        createComet();
+        lastSpawnTime = timestamp;
+      }
+
+      const rocketRect = getRocketRect();
+
+      for (let i = comets.length - 1; i >= 0; i--) {
+        const comet = comets[i];
+        comet.y += comet.speed * dt;
+        comet.el.style.top = comet.y + "px";
+
+        const cometRect = {
+          x: comet.x + 4,
+          y: comet.y + 6,
+          width: comet.width - 8,
+          height: comet.height - 12
+        };
+
+        if (rectsOverlap(rocketRect, cometRect)) {
+          endGame();
+          return;
+        }
+
+        if (!comet.counted && comet.y > rocketRect.y + rocketRect.height) {
+          comet.counted = true;
+          dodged++;
+          dodgedStat.textContent = dodged;
+        }
+
+        if (comet.y > getAreaHeight() + 70) {
+          removeComet(i);
+        }
+      }
+
+      timeStat.textContent = elapsed.toFixed(1) + "s";
+
+      animationId = requestAnimationFrame(gameLoop);
     }
 
-    function removeAllComets() {
-      comets.forEach(comet => comet.el.remove());
-      comets = [];
-    }
-
-    function resetToReady() {
-      gameRunning = false;
-      clearRunningStuffOnly();
-      removeAllComets();
-      elapsedTime = 0;
-      dodged = 0;
-      timeEl.textContent = "0.0s";
-      dodgedEl.textContent = "0";
-      resetPlayer();
-      showReadyOverlay();
-    }
-
-    document.addEventListener("keydown", (e) => {
+    // ===== Keyboard controls =====
+    window.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
-        movePlayer("left");
-      } else if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
-        movePlayer("right");
+        moveLeft = true;
+      }
+      if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
+        moveRight = true;
       }
     });
 
-    leftBtn.addEventListener("click", () => movePlayer("left"));
-    rightBtn.addEventListener("click", () => movePlayer("right"));
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
+        moveLeft = false;
+      }
+      if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
+        moveRight = false;
+      }
+    });
 
-    leftBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      movePlayer("left");
-    }, { passive: false });
+    // ===== Mobile buttons =====
+    function pressLeftOn() {
+      moveLeft = true;
+      leftBtn.classList.add("active");
+    }
+    function pressLeftOff() {
+      moveLeft = false;
+      leftBtn.classList.remove("active");
+    }
+    function pressRightOn() {
+      moveRight = true;
+      rightBtn.classList.add("active");
+    }
+    function pressRightOff() {
+      moveRight = false;
+      rightBtn.classList.remove("active");
+    }
 
-    rightBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      movePlayer("right");
-    }, { passive: false });
+    leftBtn.addEventListener("touchstart", (e) => { e.preventDefault(); pressLeftOn(); }, { passive: false });
+    leftBtn.addEventListener("touchend", pressLeftOff);
+    leftBtn.addEventListener("touchcancel", pressLeftOff);
+    leftBtn.addEventListener("mousedown", pressLeftOn);
+    leftBtn.addEventListener("mouseup", pressLeftOff);
+    leftBtn.addEventListener("mouseleave", pressLeftOff);
 
-    restartBtn.addEventListener("click", resetToReady);
+    rightBtn.addEventListener("touchstart", (e) => { e.preventDefault(); pressRightOn(); }, { passive: false });
+    rightBtn.addEventListener("touchend", pressRightOff);
+    rightBtn.addEventListener("touchcancel", pressRightOff);
+    rightBtn.addEventListener("mousedown", pressRightOn);
+    rightBtn.addEventListener("mouseup", pressRightOff);
+    rightBtn.addEventListener("mouseleave", pressRightOff);
 
+    // ===== Buttons =====
+    startBtn.addEventListener("click", startGame);
+    restartBtn.addEventListener("click", startGame);
+
+    // ===== Resize =====
     window.addEventListener("resize", () => {
-      const areaWidth = gameArea.clientWidth;
-      playerWidth = player.offsetWidth || 42;
-
-      if (playerX > areaWidth - playerWidth) {
-        playerX = Math.max(0, areaWidth - playerWidth);
+      if (!gameRunning) {
+        resetRocket();
+      } else {
+        const maxX = getAreaWidth() - rocketEl.offsetWidth;
+        rocketX = Math.max(0, Math.min(maxX, rocketX));
+        rocketEl.style.left = rocketX + "px";
       }
-
-      player.style.left = playerX + "px";
-      player.style.transform = "none";
     });
 
-    createBackgroundStars();
-    resetToReady();
+    // init
+    resetRocket();
   </script>
 </body>
 </html>
