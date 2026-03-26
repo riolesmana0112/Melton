@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Halo Melton</title>
+  <title>Welcome Melton</title>
   <style>
     * {
       margin: 0;
@@ -54,14 +54,15 @@
 
     .card {
       width: 100%;
-      max-width: 700px;
-      padding: 50px 30px;
+      max-width: 720px;
+      padding: 50px 28px;
       border-radius: 32px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(14px);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
       text-align: center;
+      position: relative;
     }
 
     .small-text {
@@ -72,12 +73,69 @@
       margin-bottom: 12px;
     }
 
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
     h1 {
       font-size: clamp(2.6rem, 8vw, 5rem);
       font-weight: 700;
       color: #f8fafc;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
-      margin-bottom: 12px;
+      margin-bottom: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    h1:active {
+      transform: scale(0.98);
+    }
+
+    .rocket-btn {
+      border: none;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: white;
+      font-size: 1.4rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rocket-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .rocket-btn.launch {
+      animation: rocketFly 1.2s ease forwards;
+    }
+
+    @keyframes rocketFly {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      30% {
+        transform: translateY(-12px) rotate(-8deg) scale(1.08);
+      }
+      100% {
+        transform: translateY(-180px) rotate(-12deg) scale(1.15);
+        opacity: 0;
+      }
     }
 
     .subtitle {
@@ -85,14 +143,17 @@
       font-size: 1.05rem;
       line-height: 1.8;
       max-width: 520px;
-      margin: 0 auto 30px;
+      margin: 0 auto 26px;
+      min-height: 34px;
+      transition: opacity 0.3s ease;
     }
 
     .button-group {
       display: flex;
       justify-content: center;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
+      margin-bottom: 16px;
     }
 
     .menu-btn {
@@ -128,21 +189,132 @@
       filter: brightness(1.06);
     }
 
-    .footer-note {
-      margin-top: 28px;
-      color: rgba(203, 213, 225, 0.8);
+    .mini-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .mini-btn {
+      border: none;
+      cursor: pointer;
+      padding: 10px 18px;
+      border-radius: 999px;
       font-size: 0.9rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .mini-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .note-card {
+      margin-top: 18px;
+      width: 100%;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      line-height: 1.7;
+      font-size: 0.96rem;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .note-card.show {
+      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.18);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: rgba(203, 213, 225, 0.75);
+      font-size: 0.88rem;
+    }
+
+    .secret-popup,
+    .rocket-popup {
+      position: fixed;
+      left: 50%;
+      width: calc(100% - 32px);
+      max-width: 440px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      text-align: center;
+      color: #e2e8f0;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s ease;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      transform: translateX(-50%) translateY(30px);
+    }
+
+    .secret-popup {
+      bottom: 28px;
+    }
+
+    .rocket-popup {
+      bottom: 96px;
+    }
+
+    .secret-popup.show,
+    .rocket-popup.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .secret-popup strong,
+    .rocket-popup strong {
+      display: block;
+      color: white;
+      margin-bottom: 4px;
+      font-size: 1rem;
     }
 
     @media (max-width: 600px) {
       .card {
-        padding: 40px 20px;
+        padding: 40px 18px;
         border-radius: 24px;
       }
 
       .menu-btn {
         width: 100%;
         max-width: 280px;
+      }
+
+      .mini-btn {
+        width: 100%;
+        max-width: 220px;
+      }
+
+      .note-card {
+        font-size: 0.92rem;
+        min-height: 90px;
+      }
+
+      .rocket-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
       }
     }
   </style>
@@ -152,24 +324,49 @@
 
   <div class="container">
     <div class="card">
-      <div class="small-text">A little space made for melton</div>
-      <h1>Halo Melton</h1>
-      <p class="subtitle">
-        Choose your vibe<br>
-      </p>
+      <div class="small-text">A little space made for Melton</div>
+
+      <div class="title-row">
+        <h1 id="mainTitle">Welcome Melton</h1>
+        <button class="rocket-btn" id="rocketBtn" onclick="launchRocket()">🚀</button>
+      </div>
+
+      <p class="subtitle" id="subtitleText">Choose your vibe</p>
 
       <div class="button-group">
         <a href="lagu.html" class="menu-btn primary">Songs</a>
         <a href="game.html" class="menu-btn">Game</a>
+        <a href="breathe.html" class="menu-btn">Breathe</a>
       </div>
 
-      <div class="footer-note"></div>
-    </div>
+      <div class="mini-actions">
+        <button class="mini-btn" onclick="showRandomNote()">Random note</button>
+      </div>
+
+      <div class="note-card" id="noteCard">
+        Tiny corner on the internet. Pick whatever feels right.
+      </div>
+
+  <div class="secret-popup" id="secretPopup">
+    <strong>Congrats you found the easter egg 👀</strong>
+    bonus points for curiosity
+  </div>
+
+  <div class="rocket-popup" id="rocketPopup">
+    <strong>TO INFINITY AND BEYOND ✨</strong>
+    
   </div>
 
   <script>
     const bgStars = document.getElementById("bgStars");
+    const subtitleText = document.getElementById("subtitleText");
+    const noteCard = document.getElementById("noteCard");
+    const mainTitle = document.getElementById("mainTitle");
+    const secretPopup = document.getElementById("secretPopup");
+    const rocketBtn = document.getElementById("rocketBtn");
+    const rocketPopup = document.getElementById("rocketPopup");
 
+    // background stars
     function createBackgroundStars() {
       for (let i = 0; i < 70; i++) {
         const s = document.createElement("div");
@@ -181,8 +378,203 @@
         bgStars.appendChild(s);
       }
     }
-
     createBackgroundStars();
+
+    // rotating subtitle
+    const subtitles = [
+      "Choose your vibe",
+      "No pressure, just vibes",
+      "Pick whatever feels right",
+      "Tiny corner on the internet",
+      "Take your time",
+      "Stay as long as you want"
+    ];
+
+    let subtitleIndex = 0;
+
+    setInterval(() => {
+      subtitleIndex = (subtitleIndex + 1) % subtitles.length;
+      subtitleText.style.opacity = "0";
+
+      setTimeout(() => {
+        subtitleText.textContent = subtitles[subtitleIndex];
+        subtitleText.style.opacity = "1";
+      }, 250);
+    }, 3000);
+
+    // 100 random notes
+    const notes = [
+      "hope today’s being kind to you",
+      "elite button pressing technique detected",
+      "tiny break approved",
+      "you found the chill corner",
+      "low pressure mode activated",
+      "you’re allowed to take things slowly",
+      "solid vibe selection so far",
+      "you have suspiciously good taste",
+      "this button is doing important work",
+      "tiny pause successfully unlocked",
+      "objectively good click",
+      "main character break detected",
+      "this is your official excuse to chill for a sec",
+      "you clicked that with confidence",
+      "very respectable decision making",
+      "the stars approve of this",
+      "this corner is now legally yours",
+      "okay that was a clean click",
+      "you radiate elite playlist energy",
+      "small reset = still progress",
+      "your vibe has been acknowledged",
+      "the internet says you deserve a tiny break",
+      "certified good choice",
+      "this website supports your current mood",
+      "you’re doing better than your brain is saying",
+      "today doesn’t need to be perfect",
+      "good things happen after small breaks",
+      "you have premium chill potential",
+      "this note was selected with excellent timing",
+      "very strong calm energy",
+      "if this is procrastination, it’s stylish",
+      "pause accepted",
+      "nothing wrong with slowing down a little",
+      "this is a judgement-free zone",
+      "soft reset in progress",
+      "you’re allowed to breathe before continuing",
+      "tiny reminder: water exists",
+      "honestly? solid move",
+      "you’re lowkey carrying a lot",
+      "this click felt emotionally intelligent",
+      "you’ve entered low-pressure mode",
+      "being here counts as self care a little bit",
+      "not every day has to be productive-core",
+      "your shoulders can unclench now btw",
+      "we support doing one thing at a time here",
+      "that was a top-tier button press",
+      "this note thinks you’re cooler than average",
+      "there’s no rush in this corner",
+      "even five quiet minutes count",
+      "you can restart later and that still counts",
+      "congratulations on choosing vibes over chaos",
+      "this is your sign to relax your jaw",
+      "you’re not behind, you’re just tired sometimes",
+      "today can be soft if you want",
+      "the moon would approve of this pace",
+      "you’re allowed to not speedrun everything",
+      "that click had excellent form",
+      "good taste confirmed again",
+      "you seem like someone who wins side quests",
+      "rest is not a bug",
+      "this page believes in strategic chilling",
+      "you’re doing enough for right now",
+      "some things can wait a little",
+      "this is a very elegant pause",
+      "you’re surprisingly good at finding tiny comfort",
+      "lowkey iconic behavior",
+      "not everything needs immediate fixing",
+      "the vibe check has been passed",
+      "you look like someone who deserves better naps",
+      "that was a calm and collected click",
+      "the stars are being dramatic again",
+      "you can do less and still be valid",
+      "there is no leaderboard for rushing",
+      "the universe has logged this as a nice moment",
+      "you unlocked a small amount of peace",
+      "this website is gently rooting for you",
+      "you’ve got elite cozy energy",
+      "it’s okay if today is a little weird",
+      "good choice, no notes (except this one)",
+      "tiny comfort delivered successfully",
+      "this note arrived exactly when it needed to",
+      "you’re allowed to exist without optimizing everything",
+      "that was honestly kind of impressive",
+      "the calm department has approved this",
+      "you found the softer route and that’s smart",
+      "this page has zero expectations of you",
+      "sometimes the move is simply… pause",
+      "this click felt very intentional",
+      "you seem like someone with elite blanket energy",
+      "no one here is timing you",
+      "this is now a mini sanctuary",
+      "you are currently in premium soft mode",
+      "your current pace is valid",
+      "we respect a thoughtful pause around here",
+      "this note thinks you need a snack maybe",
+      "consider this a tiny emotional support popup",
+      "you don’t have to finish everything in one go",
+      "this is your reminder to blink",
+      "still standing? honestly huge",
+      "the vibe remains immaculate",
+      "this website thinks you’re handling more than it looks"
+    ];
+
+    let noteClickCount = 0;
+
+    function showRandomNote() {
+      noteClickCount++;
+
+      if (noteClickCount === 10) {
+        noteCard.innerHTML = "you’re doing better than you think";
+        noteCard.classList.add("show");
+
+        setTimeout(() => {
+          noteCard.classList.remove("show");
+        }, 900);
+
+        noteClickCount = 0;
+        return;
+      }
+
+      const random = notes[Math.floor(Math.random() * notes.length)];
+      noteCard.textContent = random;
+      noteCard.classList.add("show");
+
+      setTimeout(() => {
+        noteCard.classList.remove("show");
+      }, 700);
+    }
+
+    // title easter egg (3 clicks)
+    let titleClickCount = 0;
+    let clickResetTimer;
+
+    mainTitle.addEventListener("click", () => {
+      titleClickCount++;
+
+      clearTimeout(clickResetTimer);
+      clickResetTimer = setTimeout(() => {
+        titleClickCount = 0;
+      }, 1200);
+
+      if (titleClickCount === 3) {
+        titleClickCount = 0;
+        showSecretPopup();
+      }
+    });
+
+    function showSecretPopup() {
+      secretPopup.classList.add("show");
+
+      setTimeout(() => {
+        secretPopup.classList.remove("show");
+      }, 2500);
+    }
+
+    // rocket launch
+    function launchRocket() {
+      rocketBtn.classList.remove("launch");
+      void rocketBtn.offsetWidth; // reset animation
+      rocketBtn.classList.add("launch");
+
+      rocketPopup.classList.add("show");
+
+      setTimeout(() => {
+        rocketPopup.classList.remove("show");
+      }, 2200);
+
+      setTimeout(() => {
+        rocketBtn.classList.remove("launch");
+      }, 1300);
+    }
   </script>
 </body>
 </html>
