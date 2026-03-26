@@ -15,12 +15,16 @@
     body {
       min-height: 100vh;
       overflow: hidden;
-      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
-      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 230, 0.35), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(255, 182, 193, 0.22), transparent 30%),
+        linear-gradient(180deg, #fff7fb, #ffe4ee, #ffd6e7, #ffc8dd);
+      color: #7a3556;
       position: relative;
     }
 
-    .bg-stars {
+    /* SAKURA PETALS BACKGROUND */
+    .bg-petals {
       position: fixed;
       inset: 0;
       pointer-events: none;
@@ -28,18 +32,31 @@
       overflow: hidden;
     }
 
-    .bg-star {
+    .petal {
       position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      animation: twinkle 3s infinite ease-in-out;
+      top: -10vh;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff7fb, #ffb7d5 70%);
+      border-radius: 70% 0 70% 0;
+      opacity: 0.85;
+      filter: blur(0.2px);
+      animation: fall linear infinite;
+      transform: rotate(45deg);
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.8); }
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) translateX(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(115vh) translateX(80px) rotate(320deg);
+        opacity: 0.15;
+      }
     }
 
     .container {
@@ -54,23 +71,25 @@
 
     .card {
       width: 100%;
-      max-width: 720px;
+      max-width: 760px;
       padding: 50px 28px;
       border-radius: 32px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 60px rgba(204, 102, 153, 0.18);
       text-align: center;
       position: relative;
     }
 
     .small-text {
-      color: #cbd5e1;
+      color: #b5658b;
       font-size: 0.95rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 12px;
+      font-weight: 600;
     }
 
     .title-row {
@@ -84,9 +103,9 @@
 
     h1 {
       font-size: clamp(2.6rem, 8vw, 5rem);
-      font-weight: 700;
-      color: #f8fafc;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+      font-weight: 800;
+      color: #8a3d63;
+      text-shadow: 0 0 18px rgba(255, 182, 193, 0.25);
       margin-bottom: 0;
       cursor: pointer;
       transition: transform 0.2s ease;
@@ -97,57 +116,62 @@
       transform: scale(0.98);
     }
 
-    .rocket-btn {
+    /* SAKURA BUTTON */
+    .sakura-btn {
       border: none;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: white;
-      font-size: 1.4rem;
-      width: 52px;
-      height: 52px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      color: #d94f8a;
+      font-size: 1.5rem;
+      width: 56px;
+      height: 56px;
       border-radius: 999px;
       cursor: pointer;
       backdrop-filter: blur(10px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 10px 24px rgba(204, 102, 153, 0.16);
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
 
-    .rocket-btn:hover {
+    .sakura-btn:hover {
       transform: translateY(-2px) scale(1.08);
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.9);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.22);
     }
 
-    .rocket-btn.launch {
-      animation: rocketFly 1.2s ease forwards;
+    .sakura-btn.bloom {
+      animation: sakuraBloom 1.2s ease forwards;
     }
 
-    @keyframes rocketFly {
+    @keyframes sakuraBloom {
       0% {
-        transform: translateY(0) rotate(0deg) scale(1);
+        transform: scale(1) rotate(0deg);
         opacity: 1;
       }
       30% {
-        transform: translateY(-12px) rotate(-8deg) scale(1.08);
+        transform: scale(1.2) rotate(10deg);
+      }
+      60% {
+        transform: scale(1.35) rotate(-10deg);
       }
       100% {
-        transform: translateY(-180px) rotate(-12deg) scale(1.15);
+        transform: scale(1.55) rotate(18deg);
         opacity: 0;
       }
     }
 
     .subtitle {
-      color: #cbd5e1;
+      color: #a85b81;
       font-size: 1.05rem;
       line-height: 1.8;
       max-width: 520px;
       margin: 0 auto 26px;
       min-height: 34px;
       transition: opacity 0.3s ease;
+      font-weight: 500;
     }
 
     .button-group {
@@ -167,29 +191,29 @@
       border-radius: 999px;
       text-decoration: none;
       font-size: 1rem;
-      font-weight: 600;
-      color: white;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-weight: 700;
+      color: #8a3d63;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 10px 30px rgba(204, 102, 153, 0.12);
     }
 
-    /* DEFAULT active (Songs) */
     .menu-btn.primary {
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
       border: none;
-      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.2);
+      color: #8a2f5b;
     }
 
-    /* INI YANG KAMU MAU:
-       pas hover -> ngegede + JADI BIRU JUGA */
     .menu-btn:hover {
       transform: translateY(-3px) scale(1.05);
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
-      filter: brightness(1.05);
+      background: linear-gradient(135deg, #ffc2db, #ff9fc8);
+      border-color: rgba(255,255,255,0.95);
+      box-shadow: 0 14px 30px rgba(255, 105, 180, 0.25);
+      filter: brightness(1.03);
+      color: #7a244d;
     }
 
     .mini-actions {
@@ -206,21 +230,20 @@
       padding: 10px 18px;
       border-radius: 999px;
       font-size: 0.9rem;
-      font-weight: 600;
-      color: #e2e8f0;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-weight: 700;
+      color: #8a3d63;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
 
-    /* mini button hover biru juga */
     .mini-btn:hover {
       transform: translateY(-2px) scale(1.05);
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      border-color: rgba(255,255,255,0.08);
-      color: white;
-      box-shadow: 0 12px 26px rgba(99, 102, 241, 0.38);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      color: #7a244d;
+      box-shadow: 0 12px 26px rgba(255, 105, 180, 0.2);
     }
 
     .note-card {
@@ -231,9 +254,9 @@
       margin-right: auto;
       padding: 16px 18px;
       border-radius: 22px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      color: #9a4f75;
       line-height: 1.7;
       font-size: 0.96rem;
       min-height: 78px;
@@ -242,36 +265,37 @@
       justify-content: center;
       text-align: center;
       transition: all 0.25s ease;
+      font-weight: 500;
     }
 
     .note-card.show {
-      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.18);
+      box-shadow: 0 10px 28px rgba(255, 105, 180, 0.14);
     }
 
     .footer-note {
       margin-top: 18px;
-      color: rgba(203, 213, 225, 0.75);
+      color: rgba(181, 101, 139, 0.75);
       font-size: 0.88rem;
     }
 
     .secret-popup,
-    .rocket-popup {
+    .sakura-popup {
       position: fixed;
       left: 50%;
       width: calc(100% - 32px);
       max-width: 440px;
       padding: 16px 18px;
       border-radius: 20px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 245, 250, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       text-align: center;
-      color: #e2e8f0;
+      color: #8a3d63;
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: all 0.35s ease;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 16px 40px rgba(204, 102, 153, 0.18);
       transform: translateX(-50%) translateY(30px);
     }
 
@@ -279,20 +303,20 @@
       bottom: 28px;
     }
 
-    .rocket-popup {
+    .sakura-popup {
       bottom: 96px;
     }
 
     .secret-popup.show,
-    .rocket-popup.show {
+    .sakura-popup.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
 
     .secret-popup strong,
-    .rocket-popup strong {
+    .sakura-popup strong {
       display: block;
-      color: white;
+      color: #7a244d;
       margin-bottom: 4px;
       font-size: 1rem;
     }
@@ -318,30 +342,30 @@
         min-height: 90px;
       }
 
-      .rocket-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 1.25rem;
+      .sakura-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="bg-stars" id="bgStars"></div>
+  <div class="bg-petals" id="bgPetals"></div>
 
   <div class="container">
     <div class="card">
-      <div class="small-text">A little space made for Melton</div>
+      <div class="small-text">A little sakura corner made for Melton</div>
 
       <div class="title-row">
         <h1 id="mainTitle">Welcome Melton</h1>
-        <button class="rocket-btn" id="rocketBtn" onclick="launchRocket()">🚀</button>
+        <button class="sakura-btn" id="sakuraBtn" onclick="bloomSakura()">🌸</button>
       </div>
 
       <p class="subtitle" id="subtitleText">Choose your vibe</p>
 
       <div class="button-group">
-        <a href="lagu.html" class="menu-btn primary">Songs</a>
+        <a href="lagu.html" class="menu-btn">Songs</a>
         <a href="game.html" class="menu-btn">Game</a>
         <a href="breathe.html" class="menu-btn">Breathe</a>
       </div>
@@ -351,49 +375,50 @@
       </div>
 
       <div class="note-card" id="noteCard">
-        Tiny corner on the internet. Pick whatever feels right.
+        Pick whatever feels right.
       </div>
     </div>
   </div>
 
   <div class="secret-popup" id="secretPopup">
-    <strong>Congrats you found the easter egg 👀</strong>
-    bonus points for curiosity
+    <strong>Congrats you found the sakura easter egg 👀</strong>
+    bonus points for curiosity 🌸
   </div>
 
-  <div class="rocket-popup" id="rocketPopup">
-    <strong>TO INFINITY AND BEYOND ✨</strong>
+  <div class="sakura-popup" id="sakuraPopup">
+    <strong>SAKURA BLOOM MODE ACTIVATED 🌸</strong>
   </div>
 
   <script>
-    const bgStars = document.getElementById("bgStars");
+    const bgPetals = document.getElementById("bgPetals");
     const subtitleText = document.getElementById("subtitleText");
     const noteCard = document.getElementById("noteCard");
     const mainTitle = document.getElementById("mainTitle");
     const secretPopup = document.getElementById("secretPopup");
-    const rocketBtn = document.getElementById("rocketBtn");
-    const rocketPopup = document.getElementById("rocketPopup");
+    const sakuraBtn = document.getElementById("sakuraBtn");
+    const sakuraPopup = document.getElementById("sakuraPopup");
 
-    // background stars
-    function createBackgroundStars() {
-      for (let i = 0; i < 70; i++) {
-        const s = document.createElement("div");
-        s.classList.add("bg-star");
-        s.style.left = Math.random() * 100 + "vw";
-        s.style.top = Math.random() * 100 + "vh";
-        s.style.animationDelay = (Math.random() * 3) + "s";
-        s.style.opacity = Math.random();
-        bgStars.appendChild(s);
+    // background sakura petals
+    function createPetals() {
+      for (let i = 0; i < 35; i++) {
+        const p = document.createElement("div");
+        p.classList.add("petal");
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.animationDuration = (6 + Math.random() * 8) + "s";
+        p.style.animationDelay = (Math.random() * 6) + "s";
+        p.style.opacity = 0.45 + Math.random() * 0.5;
+        p.style.transform = `rotate(${35 + Math.random() * 40}deg) scale(${0.8 + Math.random() * 0.8})`;
+        bgPetals.appendChild(p);
       }
     }
-    createBackgroundStars();
+    createPetals();
 
     // rotating subtitle
     const subtitles = [
       "Choose your vibe",
-      "No pressure, just vibes",
+      "Soft pink vibes only",
       "Pick whatever feels right",
-      "Tiny corner on the internet",
+      "Tiny sakura corner on the internet",
       "Take your time",
       "Stay as long as you want"
     ];
@@ -410,39 +435,35 @@
       }, 250);
     }, 3000);
 
-    // 100 random notes
+    // notes
     const notes = [
-      "hope today’s being kind to you",
-      "elite button pressing technique detected",
+      "hope today’s being gentle with you 🌸",
+      "soft mode activated",
       "tiny break approved",
-      "you found the chill corner",
+      "you found the sakura corner",
       "low pressure mode activated",
       "you’re allowed to take things slowly",
       "solid vibe selection so far",
       "you have suspiciously good taste",
       "this button is doing important work",
       "tiny pause successfully unlocked",
-      "objectively good click",
-      "main character break detected",
+      "objectively cute click",
+      "main character in spring arc detected",
       "this is your official excuse to chill for a sec",
-      "you clicked that with confidence",
+      "you clicked that with elegance",
       "very respectable decision making",
-      "the stars approve of this",
+      "the petals approve of this",
       "this corner is now legally yours",
       "okay that was a clean click",
       "you radiate elite playlist energy",
       "small reset = still progress",
       "your vibe has been acknowledged",
-      "the internet says you deserve a tiny break",
-      "certified good choice",
+      "certified soft choice",
       "this website supports your current mood",
-      "you’re doing better than your brain is saying",
       "today doesn’t need to be perfect",
       "good things happen after small breaks",
-      "you have premium chill potential",
-      "this note was selected with excellent timing",
+      "you have premium cozy potential",
       "very strong calm energy",
-      "if this is procrastination, it’s stylish",
       "pause accepted",
       "nothing wrong with slowing down a little",
       "this is a judgement-free zone",
@@ -450,69 +471,23 @@
       "you’re allowed to breathe before continuing",
       "tiny reminder: water exists",
       "honestly? solid move",
-      "you’re lowkey carrying a lot",
-      "this click felt emotionally intelligent",
       "you’ve entered low-pressure mode",
       "being here counts as self care a little bit",
       "not every day has to be productive-core",
       "your shoulders can unclench now btw",
-      "we support doing one thing at a time here",
-      "that was a top-tier button press",
-      "this note thinks you’re cooler than average",
       "there’s no rush in this corner",
       "even five quiet minutes count",
-      "you can restart later and that still counts",
-      "congratulations on choosing vibes over chaos",
-      "this is your sign to relax your jaw",
-      "you’re not behind, you’re just tired sometimes",
       "today can be soft if you want",
-      "the moon would approve of this pace",
       "you’re allowed to not speedrun everything",
-      "that click had excellent form",
       "good taste confirmed again",
-      "you seem like someone who wins side quests",
       "rest is not a bug",
-      "this page believes in strategic chilling",
       "you’re doing enough for right now",
-      "some things can wait a little",
       "this is a very elegant pause",
-      "you’re surprisingly good at finding tiny comfort",
-      "lowkey iconic behavior",
-      "not everything needs immediate fixing",
       "the vibe check has been passed",
-      "you look like someone who deserves better naps",
-      "that was a calm and collected click",
-      "the stars are being dramatic again",
-      "you can do less and still be valid",
-      "there is no leaderboard for rushing",
-      "the universe has logged this as a nice moment",
-      "you unlocked a small amount of peace",
       "this website is gently rooting for you",
       "you’ve got elite cozy energy",
-      "it’s okay if today is a little weird",
       "good choice, no notes (except this one)",
-      "tiny comfort delivered successfully",
-      "this note arrived exactly when it needed to",
-      "you’re allowed to exist without optimizing everything",
-      "that was honestly kind of impressive",
-      "the calm department has approved this",
-      "you found the softer route and that’s smart",
-      "this page has zero expectations of you",
-      "sometimes the move is simply… pause",
-      "this click felt very intentional",
-      "you seem like someone with elite blanket energy",
-      "no one here is timing you",
-      "this is now a mini sanctuary",
-      "you are currently in premium soft mode",
-      "your current pace is valid",
-      "we respect a thoughtful pause around here",
-      "this note thinks you need a snack maybe",
-      "consider this a tiny emotional support popup",
-      "you don’t have to finish everything in one go",
-      "this is your reminder to blink",
-      "still standing? honestly huge",
-      "the vibe remains immaculate",
-      "this website thinks you’re handling more than it looks"
+      "tiny comfort delivered successfully"
     ];
 
     let noteClickCount = 0;
@@ -521,7 +496,7 @@
       noteClickCount++;
 
       if (noteClickCount === 10) {
-        noteCard.innerHTML = "you’re doing better than you think";
+        noteCard.innerHTML = "you’re blooming better than you think 🌸";
         noteCard.classList.add("show");
 
         setTimeout(() => {
@@ -567,20 +542,36 @@
       }, 2500);
     }
 
-    // rocket launch
-    function launchRocket() {
-      rocketBtn.classList.remove("launch");
-      void rocketBtn.offsetWidth;
-      rocketBtn.classList.add("launch");
+    // sakura bloom button
+    function bloomSakura() {
+      sakuraBtn.classList.remove("bloom");
+      void sakuraBtn.offsetWidth;
+      sakuraBtn.classList.add("bloom");
 
-      rocketPopup.classList.add("show");
+      sakuraPopup.classList.add("show");
+
+      // extra burst petals pas dipencet
+      for (let i = 0; i < 10; i++) {
+        const burst = document.createElement("div");
+        burst.classList.add("petal");
+        burst.style.left = "50vw";
+        burst.style.top = "45vh";
+        burst.style.animationDuration = (3 + Math.random() * 2) + "s";
+        burst.style.opacity = 0.7 + Math.random() * 0.3;
+        burst.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random()})`;
+        bgPetals.appendChild(burst);
+
+        setTimeout(() => {
+          burst.remove();
+        }, 5000);
+      }
 
       setTimeout(() => {
-        rocketPopup.classList.remove("show");
+        sakuraPopup.classList.remove("show");
       }, 2200);
 
       setTimeout(() => {
-        rocketBtn.classList.remove("launch");
+        sakuraBtn.classList.remove("bloom");
       }, 1300);
     }
   </script>
