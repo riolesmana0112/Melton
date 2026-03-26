@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Dodge the Comets 🚀</title>
+  <title>Dodge the Sakura 🌸</title>
   <style>
     * {
       margin: 0;
@@ -17,8 +17,11 @@
     body {
       min-height: 100vh;
       overflow-x: hidden;
-      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
-      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 230, 0.35), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(255, 182, 193, 0.22), transparent 30%),
+        linear-gradient(180deg, #fff7fb, #ffe4ee, #ffd6e7, #ffc8dd);
+      color: #7a3556;
       position: relative;
       user-select: none;
     }
@@ -33,16 +36,29 @@
 
     .bg-star {
       position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      animation: twinkle 3s infinite ease-in-out;
+      top: -10vh;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff7fb, #ffb7d5 70%);
+      border-radius: 70% 0 70% 0;
+      opacity: 0.85;
+      filter: blur(0.2px);
+      animation: fall linear infinite;
+      transform: rotate(45deg);
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.8); }
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) translateX(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(115vh) translateX(80px) rotate(320deg);
+        opacity: 0.15;
+      }
     }
 
     .container {
@@ -65,21 +81,22 @@
 
     .back-btn {
       text-decoration: none;
-      color: white;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #8a3d63;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       padding: 10px 18px;
       border-radius: 999px;
       transition: all 0.3s ease;
       backdrop-filter: blur(8px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 10px 24px rgba(204, 102, 153, 0.12);
+      font-weight: 600;
     }
 
     .back-btn:hover {
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      border-color: rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
       transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.2);
     }
 
     .main-card {
@@ -87,31 +104,32 @@
       max-width: 760px;
       padding: 22px 14px 24px;
       border-radius: 28px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(14px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 20px 60px rgba(204, 102, 153, 0.16);
       text-align: center;
     }
 
     .eyebrow {
-      color: #cbd5e1;
+      color: #b5658b;
       font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 8px;
+      font-weight: 600;
     }
 
     h1 {
       font-size: clamp(1.8rem, 6vw, 3rem);
       font-weight: 700;
-      color: #f8fafc;
+      color: #8a3d63;
       margin-bottom: 8px;
-      text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+      text-shadow: 0 0 18px rgba(255, 182, 193, 0.25);
     }
 
     .subtitle {
-      color: #cbd5e1;
+      color: #a85b81;
       font-size: 0.95rem;
       line-height: 1.7;
       margin-bottom: 18px;
@@ -127,21 +145,21 @@
     .stat-box {
       padding: 14px 10px;
       border-radius: 22px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 12px 30px rgba(204,102,153,0.12);
     }
 
     .stat-label {
       font-size: 0.85rem;
-      color: #cbd5e1;
+      color: #a85b81;
       margin-bottom: 4px;
     }
 
     .stat-value {
       font-size: clamp(1.1rem, 4vw, 1.8rem);
       font-weight: 700;
-      color: #fff;
+      color: #8a2f5b;
     }
 
     .game-wrap {
@@ -158,14 +176,13 @@
       border-radius: 28px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 20% 20%, rgba(99,102,241,0.08), transparent 35%),
-        radial-gradient(circle at 80% 30%, rgba(56,189,248,0.08), transparent 35%),
-        rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 0 0 30px rgba(255,255,255,0.02), 0 18px 45px rgba(0,0,0,0.2);
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 231, 0.28), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(255, 183, 213, 0.22), transparent 35%),
+        rgba(255,255,255,0.28);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.08), 0 18px 45px rgba(204,102,153,0.12);
     }
 
-    /* ROKET BALIK KAYAK TADI */
     .rocket {
       position: absolute;
       width: 42px;
@@ -177,23 +194,22 @@
       bottom: 18px;
       transform: translateX(-50%);
       z-index: 5;
-      filter: drop-shadow(0 0 10px rgba(99,102,241,0.35));
+      filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.18));
       transition: transform 0.05s linear;
       pointer-events: none;
     }
 
     .comet {
       position: absolute;
-      width: 26px;
-      height: 58px;
-      font-size: 34px;
+      width: 28px;
+      height: 28px;
+      font-size: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: rotate(35deg);
       pointer-events: none;
       opacity: 0.95;
-      filter: drop-shadow(0 0 10px rgba(56,189,248,0.35));
+      filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.14));
     }
 
     .overlay {
@@ -204,7 +220,7 @@
       justify-content: center;
       padding: 20px;
       z-index: 20;
-      background: rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.05);
       backdrop-filter: blur(2px);
     }
 
@@ -217,9 +233,9 @@
       max-width: 560px;
       padding: 26px 20px;
       border-radius: 28px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow: 0 18px 50px rgba(0,0,0,0.26);
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 18px 50px rgba(204,102,153,0.14);
       backdrop-filter: blur(12px);
     }
 
@@ -227,10 +243,11 @@
       font-size: clamp(2rem, 8vw, 3.4rem);
       font-weight: 700;
       margin-bottom: 10px;
+      color: #8a2f5b;
     }
 
     .overlay-text {
-      color: #dbe5f3;
+      color: #a85b81;
       line-height: 1.8;
       font-size: 1rem;
       margin-bottom: 18px;
@@ -244,19 +261,19 @@
       border-radius: 999px;
       font-size: 1rem;
       font-weight: 600;
-      color: white;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #8a2f5b;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 10px 28px rgba(204, 102, 153, 0.12);
     }
 
     .play-btn:hover {
       transform: translateY(-3px) scale(1.05);
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      box-shadow: 0 14px 30px rgba(255, 105, 180, 0.2);
     }
 
     .controls {
@@ -275,24 +292,24 @@
       border-radius: 999px;
       font-size: 1rem;
       font-weight: 600;
-      color: white;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #8a2f5b;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 10px 28px rgba(204, 102, 153, 0.12);
     }
 
     .ctrl-btn:hover,
     .ctrl-btn.active {
       transform: translateY(-3px) scale(1.05);
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      box-shadow: 0 14px 30px rgba(255, 105, 180, 0.2);
     }
 
     .bottom-note {
-      color: rgba(203, 213, 225, 0.9);
+      color: rgba(181, 101, 139, 0.85);
       font-size: 0.92rem;
       line-height: 1.8;
     }
@@ -331,9 +348,9 @@
       }
 
       .comet {
-        width: 22px;
-        height: 50px;
-        font-size: 30px;
+        width: 24px;
+        height: 24px;
+        font-size: 20px;
       }
 
       .ctrl-btn {
@@ -352,8 +369,8 @@
 
     <div class="main-card">
       <div class="eyebrow">tiny arcade survival</div>
-      <h1>Dodge the Comets 🚀</h1>
-      <p class="subtitle">Move left & right. Survive as long as possible.<br>Starts chill. Then slowly gets rude.</p>
+      <h1>Dodge the Sakura 🌸</h1>
+      <p class="subtitle">Move left & right. Survive as long as possible.<br>Starts cute. Then slowly gets rude.</p>
 
       <div class="stats">
         <div class="stat-box">
@@ -372,16 +389,15 @@
 
       <div class="game-wrap">
         <div class="game-area" id="gameArea">
-          <!-- ROKET BALIK KAYAK TADI -->
-          <div class="rocket" id="rocket">🛸</div>
+          <div class="rocket" id="rocket">🎀</div>
 
           <div class="overlay" id="startOverlay">
             <div class="overlay-card">
-              <div class="overlay-title">Ready? 🚀</div>
+              <div class="overlay-title">Ready? 🌸</div>
               <div class="overlay-text">
-                Dodge the comets.<br>
+                Dodge the falling sakura.<br>
                 Starts easy, gets harder slowly.<br>
-                No laggy meteor apocalypse this time 😌
+                Cute at first... then mildly disrespectful 😌
               </div>
               <button class="play-btn" id="startBtn">Play now</button>
             </div>
@@ -389,7 +405,7 @@
 
           <div class="overlay hidden" id="gameOverOverlay">
             <div class="overlay-card">
-              <div class="overlay-title">Game over ☄️</div>
+              <div class="overlay-title">Game over 🌸</div>
               <div class="overlay-text" id="gameOverText">
                 You survived 0.0s<br>
                 Dodged: 0
@@ -406,22 +422,22 @@
       </div>
 
       <div class="bottom-note">
-        mobile friendly + keyboard friendly = elite tiny arcade
       </div>
     </div>
   </div>
 
   <script>
-    // ===== Background stars =====
+    // ===== Background sakura petals =====
     const bgStars = document.getElementById("bgStars");
     function createBackgroundStars() {
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < 35; i++) {
         const s = document.createElement("div");
         s.classList.add("bg-star");
         s.style.left = Math.random() * 100 + "vw";
-        s.style.top = Math.random() * 100 + "vh";
-        s.style.animationDelay = (Math.random() * 3) + "s";
-        s.style.opacity = Math.random();
+        s.style.animationDuration = (6 + Math.random() * 8) + "s";
+        s.style.animationDelay = (Math.random() * 6) + "s";
+        s.style.opacity = 0.45 + Math.random() * 0.5;
+        s.style.transform = `rotate(${35 + Math.random() * 40}deg) scale(${0.8 + Math.random() * 0.8})`;
         bgStars.appendChild(s);
       }
     }
@@ -455,13 +471,13 @@
     let moveRight = false;
 
     let dodged = 0;
-    let best = parseFloat(localStorage.getItem("cometBestTime") || "0");
+    let best = parseFloat(localStorage.getItem("sakuraBestTime") || "0");
 
-    // Rocket position
+    // Player position
     let rocketX = 0;
     let rocketSpeed = 360; // px per second
 
-    // Comets array
+    // Falling sakura array
     let comets = [];
 
     // ===== Difficulty tuning (ANTI LAG VERSION) =====
@@ -499,20 +515,25 @@
 
       const cometEl = document.createElement("div");
       cometEl.className = "comet";
-      cometEl.textContent = "☄️";
+      cometEl.textContent = "🌸";
 
-      const width = 26;
+      const width = 28;
+      const height = 28;
       const x = Math.random() * (getAreaWidth() - width);
       const speed = diff.cometSpeed + Math.random() * 45;
+      const drift = (Math.random() - 0.5) * 50; // sedikit gerak kiri kanan biar natural
 
       const comet = {
         el: cometEl,
         x,
-        y: -60,
+        y: -40,
         width,
-        height: 58,
+        height,
         speed,
-        counted: false
+        drift,
+        counted: false,
+        spin: Math.random() * 360,
+        spinSpeed: (Math.random() * 120) - 60
       };
 
       cometEl.style.left = x + "px";
@@ -572,6 +593,12 @@
       startOverlay.classList.add("hidden");
       gameOverOverlay.classList.add("hidden");
 
+      moveLeft = false;
+      moveRight = false;
+
+      leftBtn.classList.remove("active");
+      rightBtn.classList.remove("active");
+
       resetRocket();
 
       cancelAnimationFrame(animationId);
@@ -584,14 +611,14 @@
 
       if (elapsed > best) {
         best = elapsed;
-        localStorage.setItem("cometBestTime", best.toString());
+        localStorage.setItem("sakuraBestTime", best.toString());
         updateBestUI();
       }
 
       gameOverText.innerHTML = `
         You survived <strong>${elapsed.toFixed(1)}s</strong><br>
         Dodged: <strong>${dodged}</strong><br>
-        Solid run not gonna lie 😌
+        Tiny chaos, respectable run 😌
       `;
 
       gameOverOverlay.classList.remove("hidden");
@@ -622,14 +649,22 @@
 
       for (let i = comets.length - 1; i >= 0; i--) {
         const comet = comets[i];
+
         comet.y += comet.speed * dt;
+        comet.x += Math.sin((timestamp / 300) + i) * (comet.drift * dt);
+        comet.spin += comet.spinSpeed * dt;
+
+        comet.x = Math.max(0, Math.min(getAreaWidth() - comet.width, comet.x));
+
+        comet.el.style.left = comet.x + "px";
         comet.el.style.top = comet.y + "px";
+        comet.el.style.transform = `rotate(${comet.spin}deg)`;
 
         const cometRect = {
-          x: comet.x + 4,
-          y: comet.y + 6,
-          width: comet.width - 8,
-          height: comet.height - 12
+          x: comet.x + 3,
+          y: comet.y + 3,
+          width: comet.width - 6,
+          height: comet.height - 6
         };
 
         if (rectsOverlap(rocketRect, cometRect)) {
@@ -643,7 +678,7 @@
           dodgedStat.textContent = dodged;
         }
 
-        if (comet.y > getAreaHeight() + 70) {
+        if (comet.y > getAreaHeight() + 50) {
           removeComet(i);
         }
       }
