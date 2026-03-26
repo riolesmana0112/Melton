@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catch the Stars ✨</title>
+  <title>Catch the Sakura 🌸</title>
   <style>
     * {
       margin: 0;
@@ -15,12 +15,14 @@
     body {
       min-height: 100vh;
       overflow: hidden;
-      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
-      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 230, 0.35), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(255, 182, 193, 0.22), transparent 30%),
+        linear-gradient(180deg, #fff7fb, #ffe4ee, #ffd6e7, #ffc8dd);
+      color: #7a3556;
       position: relative;
     }
 
-    /* Background stars */
     .bg-stars {
       position: fixed;
       inset: 0;
@@ -31,16 +33,29 @@
 
     .bg-star {
       position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      animation: twinkle 3s infinite ease-in-out;
+      top: -10vh;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff7fb, #ffb7d5 70%);
+      border-radius: 70% 0 70% 0;
+      opacity: 0.85;
+      filter: blur(0.2px);
+      animation: fallBg linear infinite;
+      transform: rotate(45deg);
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.8); }
+    @keyframes fallBg {
+      0% {
+        transform: translateY(-10vh) translateX(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(115vh) translateX(80px) rotate(320deg);
+        opacity: 0.15;
+      }
     }
 
     .container {
@@ -67,18 +82,22 @@
 
     .back-btn {
       text-decoration: none;
-      color: white;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #8a3d63;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       padding: 10px 18px;
       border-radius: 999px;
       transition: 0.3s ease;
       backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(204, 102, 153, 0.12);
+      font-weight: 600;
     }
 
     .back-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.2);
     }
 
     .title {
@@ -91,12 +110,12 @@
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 700;
       letter-spacing: 1px;
-      color: #f8fafc;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      color: #8a3d63;
+      text-shadow: 0 0 18px rgba(255, 182, 193, 0.25);
     }
 
     .title p {
-      color: #cbd5e1;
+      color: #a85b81;
       margin-top: 8px;
       font-size: 1rem;
     }
@@ -110,26 +129,26 @@
     }
 
     .stat-box {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       padding: 12px 18px;
       border-radius: 18px;
       min-width: 120px;
       text-align: center;
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 30px rgba(204, 102, 153, 0.12);
     }
 
     .stat-label {
       font-size: 0.85rem;
-      color: #cbd5e1;
+      color: #a85b81;
       margin-bottom: 5px;
     }
 
     .stat-value {
       font-size: 1.4rem;
       font-weight: bold;
-      color: #ffffff;
+      color: #8a2f5b;
     }
 
     .controls {
@@ -138,18 +157,20 @@
 
     .start-btn {
       border: none;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: white;
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      color: #8a2f5b;
       padding: 14px 28px;
       border-radius: 999px;
       font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: 0.3s ease;
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.18);
     }
 
     .start-btn:hover {
       transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.22);
     }
 
     .game-area {
@@ -157,11 +178,11 @@
       width: min(92vw, 900px);
       height: min(68vh, 560px);
       border-radius: 28px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       overflow: hidden;
       backdrop-filter: blur(12px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 20px 60px rgba(204, 102, 153, 0.16);
     }
 
     .game-overlay {
@@ -173,38 +194,41 @@
       text-align: center;
       padding: 20px;
       z-index: 5;
-      background: rgba(15, 23, 42, 0.55);
+      background: rgba(255, 240, 246, 0.48);
       backdrop-filter: blur(6px);
     }
 
     .overlay-card {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.58);
       padding: 30px 24px;
       border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.78);
       max-width: 420px;
       width: 100%;
+      box-shadow: 0 16px 40px rgba(204, 102, 153, 0.14);
     }
 
     .overlay-card h2 {
       font-size: 1.8rem;
       margin-bottom: 10px;
+      color: #8a2f5b;
     }
 
     .overlay-card p {
-      color: #cbd5e1;
+      color: #a85b81;
       margin-bottom: 18px;
       line-height: 1.6;
     }
 
-    .star {
+    .sakura {
       position: absolute;
       font-size: 2rem;
       cursor: pointer;
       user-select: none;
       animation: fall linear forwards;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 180, 0.7));
+      filter: drop-shadow(0 0 10px rgba(255, 182, 193, 0.55));
       z-index: 2;
+      will-change: transform;
     }
 
     @keyframes fall {
@@ -218,13 +242,13 @@
 
     .pop {
       position: absolute;
-      color: #fde68a;
+      color: #ff7eb3;
       font-weight: bold;
       font-size: 1rem;
       pointer-events: none;
       animation: popUp 0.7s ease forwards;
       z-index: 4;
-      text-shadow: 0 0 10px rgba(253, 230, 138, 0.8);
+      text-shadow: 0 0 10px rgba(255, 126, 179, 0.45);
     }
 
     @keyframes popUp {
@@ -256,7 +280,7 @@
         font-size: 1.2rem;
       }
 
-      .star {
+      .sakura {
         font-size: 1.8rem;
       }
     }
@@ -271,8 +295,8 @@
     </div>
 
     <div class="title">
-      <h1>Catch the Stars ✨</h1>
-      <p>Click as many stars as you can before time runs out.</p>
+      <h1>Catch the Sakura 🌸</h1>
+      <p>Click as many sakura petals as you can before time runs out.</p>
     </div>
 
     <div class="stats">
@@ -297,10 +321,10 @@
     <div class="game-area" id="gameArea">
       <div class="game-overlay" id="overlay">
         <div class="overlay-card">
-          <h2>Ready? 🌌</h2>
+          <h2>Ready? 🌸</h2>
           <p>
-            Catch as many stars as you can in 20 seconds.<br>
-            Lets see what you got 😎
+            Catch as many sakura petals as you can in 20 seconds.<br>
+            Soft hands only 😌
           </p>
           <button class="start-btn" id="overlayStartBtn">Play Now</button>
         </div>
@@ -315,7 +339,6 @@
     const bestEl = document.getElementById("best");
     const startBtn = document.getElementById("startBtn");
     const overlay = document.getElementById("overlay");
-    const overlayStartBtn = document.getElementById("overlayStartBtn");
     const bgStars = document.getElementById("bgStars");
 
     let score = 0;
@@ -324,25 +347,24 @@
     let timerInterval = null;
     let spawnInterval = null;
 
-    let bestScore = localStorage.getItem("catchTheStarsBest") || 0;
+    let bestScore = Number(localStorage.getItem("catchTheStarsBest") || 0);
     bestEl.textContent = bestScore;
 
-    // Background twinkle stars
     function createBackgroundStars() {
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < 35; i++) {
         const s = document.createElement("div");
         s.classList.add("bg-star");
         s.style.left = Math.random() * 100 + "vw";
-        s.style.top = Math.random() * 100 + "vh";
-        s.style.animationDelay = (Math.random() * 3) + "s";
-        s.style.opacity = Math.random();
+        s.style.animationDuration = (6 + Math.random() * 8) + "s";
+        s.style.animationDelay = (Math.random() * 6) + "s";
+        s.style.opacity = 0.45 + Math.random() * 0.5;
+        s.style.transform = `rotate(${35 + Math.random() * 40}deg) scale(${0.8 + Math.random() * 0.8})`;
         bgStars.appendChild(s);
       }
     }
     createBackgroundStars();
 
     function startGame() {
-      // reset
       clearGame();
       score = 0;
       timeLeft = 20;
@@ -351,7 +373,6 @@
       timeEl.textContent = timeLeft;
       overlay.classList.add("hidden");
 
-      // timer
       timerInterval = setInterval(() => {
         timeLeft--;
         timeEl.textContent = timeLeft;
@@ -361,40 +382,39 @@
         }
       }, 1000);
 
-      // spawn stars
       spawnInterval = setInterval(() => {
-        spawnStar();
-      }, 550);
+        spawnSakura();
+      }, 520);
     }
 
-    function spawnStar() {
+    function spawnSakura() {
       if (!gameRunning) return;
 
-      const star = document.createElement("div");
-      star.classList.add("star");
-      star.textContent = "⭐";
+      const sakura = document.createElement("div");
+      sakura.classList.add("sakura");
+      sakura.textContent = "🌸";
 
       const areaWidth = gameArea.clientWidth;
       const randomX = Math.random() * (areaWidth - 50);
-      const duration = (Math.random() * 1.5 + 2.5).toFixed(2); // 2.5 - 4 sec
+      const duration = (Math.random() * 1.4 + 2.4).toFixed(2);
 
-      star.style.left = randomX + "px";
-      star.style.top = "-40px";
-      star.style.animationDuration = duration + "s";
+      sakura.style.left = randomX + "px";
+      sakura.style.top = "-40px";
+      sakura.style.animationDuration = duration + "s";
 
-      star.addEventListener("click", () => {
+      sakura.addEventListener("click", () => {
         if (!gameRunning) return;
         score++;
         scoreEl.textContent = score;
-        createPop("+1", star.offsetLeft, star.offsetTop);
-        star.remove();
+        createPop("+1", sakura.offsetLeft, sakura.offsetTop);
+        sakura.remove();
       });
 
-      star.addEventListener("animationend", () => {
-        star.remove();
+      sakura.addEventListener("animationend", () => {
+        sakura.remove();
       });
 
-      gameArea.appendChild(star);
+      gameArea.appendChild(sakura);
     }
 
     function createPop(text, x, y) {
@@ -415,8 +435,7 @@
       clearInterval(timerInterval);
       clearInterval(spawnInterval);
 
-      // remove leftover stars
-      document.querySelectorAll(".star").forEach(star => star.remove());
+      document.querySelectorAll(".sakura").forEach(sakura => sakura.remove());
 
       if (score > bestScore) {
         bestScore = score;
@@ -426,16 +445,16 @@
 
       let message = "Nice reflexes 👀";
       if (score >= 30) {
-        message = "Jago amat jadi pro player aja 🌟";
+        message = "Jago amat jadi sakura catcher pro 🌸";
       } else if (score >= 20) {
-        message = "Widiii bole uga lau ✨";
+        message = "Widiii bole uga lau 🌸✨";
       } else if (score >= 10) {
-        message = "Yahhh oke la ya 😎";
+        message = "Yahhh oke la ya 😌";
       }
 
       overlay.innerHTML = `
         <div class="overlay-card">
-          <h2>Time's up! ⏳</h2>
+          <h2>Time's up! 🌸</h2>
           <p>
             Your score: <strong>${score}</strong><br>
             ${message}
@@ -451,16 +470,15 @@
     function clearGame() {
       clearInterval(timerInterval);
       clearInterval(spawnInterval);
-      document.querySelectorAll(".star").forEach(star => star.remove());
+      document.querySelectorAll(".sakura").forEach(sakura => sakura.remove());
 
-      // restore default overlay if needed
       if (!overlay.querySelector("#overlayStartBtn") && !overlay.querySelector("#playAgainBtn")) {
         overlay.innerHTML = `
           <div class="overlay-card">
-            <h2>Ready? 🌌</h2>
+            <h2>Ready? 🌸</h2>
             <p>
-              Catch as many stars as you can in 20 seconds.<br>
-              Fast hands only 😎
+              Catch as many sakura petals as you can in 20 seconds.<br>
+              Soft hands only 😌
             </p>
             <button class="start-btn" id="overlayStartBtn">Play Now</button>
           </div>
@@ -470,7 +488,12 @@
     }
 
     startBtn.addEventListener("click", startGame);
-    overlayStartBtn.addEventListener("click", startGame);
+
+    document.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "overlayStartBtn") {
+        startGame();
+      }
+    });
   </script>
 </body>
 </html>
