@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catch the Stars ✨</title>
+  <title>Game Room 🎮</title>
   <style>
     * {
       margin: 0;
@@ -14,13 +14,12 @@
 
     body {
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
       background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
       color: white;
       position: relative;
     }
 
-    /* Background stars */
     .bg-stars {
       position: fixed;
       inset: 0;
@@ -55,14 +54,11 @@
 
     .top-bar {
       width: 100%;
-      max-width: 900px;
+      max-width: 1100px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: flex-start;
       margin-top: 10px;
       margin-bottom: 20px;
-      gap: 10px;
-      flex-wrap: wrap;
     }
 
     .back-btn {
@@ -72,192 +68,195 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 10px 18px;
       border-radius: 999px;
-      transition: 0.3s ease;
+      transition: all 0.3s ease;
       backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
     }
 
+    /* BACK HOVER -> BIRU */
     .back-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
     }
 
-    .title {
+    .main-card {
+      width: 100%;
+      max-width: 1100px;
+      padding: 34px 20px 28px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
       text-align: center;
-      margin-top: 10px;
+    }
+
+    .eyebrow {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       margin-bottom: 10px;
     }
 
-    .title h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+    h1 {
+      font-size: clamp(2rem, 7vw, 4rem);
       font-weight: 700;
-      letter-spacing: 1px;
       color: #f8fafc;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      margin-bottom: 10px;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
     }
 
-    .title p {
+    .subtitle {
       color: #cbd5e1;
-      margin-top: 8px;
       font-size: 1rem;
+      line-height: 1.8;
+      max-width: 700px;
+      margin: 0 auto 28px;
     }
 
-    .stats {
-      display: flex;
-      gap: 15px;
-      margin: 15px 0 20px;
-      flex-wrap: wrap;
-      justify-content: center;
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
     }
 
-    .stat-box {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 12px 18px;
-      border-radius: 18px;
-      min-width: 120px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .stat-label {
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      margin-bottom: 5px;
-    }
-
-    .stat-value {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #ffffff;
-    }
-
-    .controls {
-      margin-bottom: 15px;
-    }
-
-    .start-btn {
-      border: none;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
+    .game-card {
+      text-decoration: none;
       color: white;
-      padding: 14px 28px;
-      border-radius: 999px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
-    }
-
-    .start-btn:hover {
-      transform: translateY(-2px) scale(1.03);
-    }
-
-    .game-area {
-      position: relative;
-      width: min(92vw, 900px);
-      height: min(68vh, 560px);
-      border-radius: 28px;
+      display: block;
+      padding: 24px 18px;
+      border-radius: 26px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      overflow: hidden;
       backdrop-filter: blur(12px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
     }
 
-    .game-overlay {
-      position: absolute;
-      inset: 0;
+    /* HOVER -> SAMA KAYAK TADI: BIRU + NGEGEDE */
+    .game-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.16), rgba(99, 102, 241, 0.14));
+      border-color: rgba(99, 102, 241, 0.28);
+      box-shadow: 0 18px 42px rgba(99, 102, 241, 0.28);
+    }
+
+    .game-icon {
+      font-size: 2.8rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .game-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .game-desc {
+      color: #cbd5e1;
+      font-size: 0.96rem;
+      line-height: 1.8;
+      margin-bottom: 18px;
+      min-height: 96px;
+    }
+
+    .tag-wrap {
       display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .play-btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 20px;
-      z-index: 5;
-      background: rgba(15, 23, 42, 0.55);
-      backdrop-filter: blur(6px);
+      min-width: 150px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
     }
 
-    .overlay-card {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 30px 24px;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      max-width: 420px;
+    /* PLAY BTN IKUT BIRU PAS CARD DIHOVER */
+    .game-card:hover .play-btn {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border: none;
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+      transform: scale(1.04);
+    }
+
+    .bottom-note {
+      margin-top: 6px;
+      color: rgba(203, 213, 225, 0.8);
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    .hint-box {
       width: 100%;
-    }
-
-    .overlay-card h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-    }
-
-    .overlay-card p {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #cbd5e1;
-      margin-bottom: 18px;
-      line-height: 1.6;
+      font-size: 0.92rem;
+      line-height: 1.8;
     }
 
-    .star {
-      position: absolute;
-      font-size: 2rem;
-      cursor: pointer;
-      user-select: none;
-      animation: fall linear forwards;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 180, 0.7));
-      z-index: 2;
-    }
-
-    @keyframes fall {
-      from {
-        transform: translateY(-60px) rotate(0deg);
+    @media (max-width: 900px) {
+      .games-grid {
+        grid-template-columns: 1fr;
       }
-      to {
-        transform: translateY(700px) rotate(360deg);
-      }
-    }
 
-    .pop {
-      position: absolute;
-      color: #fde68a;
-      font-weight: bold;
-      font-size: 1rem;
-      pointer-events: none;
-      animation: popUp 0.7s ease forwards;
-      z-index: 4;
-      text-shadow: 0 0 10px rgba(253, 230, 138, 0.8);
-    }
-
-    @keyframes popUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+      .game-card {
+        min-height: auto;
       }
-      100% {
-        opacity: 0;
-        transform: translateY(-25px) scale(1.2);
-      }
-    }
 
-    .hidden {
-      display: none;
+      .game-desc {
+        min-height: auto;
+      }
     }
 
     @media (max-width: 600px) {
-      .game-area {
-        height: 60vh;
+      .main-card {
+        padding: 28px 14px 22px;
+        border-radius: 24px;
       }
 
-      .stat-box {
-        min-width: 100px;
-        padding: 10px 14px;
+      .game-card {
+        padding: 22px 14px;
+        border-radius: 22px;
       }
 
-      .stat-value {
-        font-size: 1.2rem;
-      }
-
-      .star {
-        font-size: 1.8rem;
+      .game-name {
+        font-size: 1.3rem;
       }
     }
   </style>
@@ -270,64 +269,75 @@
       <a href="index.html" class="back-btn">← Back</a>
     </div>
 
-    <div class="title">
-      <h1>Catch the Stars ✨</h1>
-      <p>Click as many stars as you can before time runs out.</p>
-    </div>
+    <div class="main-card">
+      <div class="eyebrow">Tiny fun corner</div>
+      <h1>Game Room 🎮</h1>
+      <p class="subtitle">
+        Pick a mini game depending on the vibe.<br>
+        Fast hands, good memory, or tiny chaos.
+      </p>
 
-    <div class="stats">
-      <div class="stat-box">
-        <div class="stat-label">Score</div>
-        <div class="stat-value" id="score">0</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Time</div>
-        <div class="stat-value" id="time">20</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-label">Best</div>
-        <div class="stat-value" id="best">0</div>
-      </div>
-    </div>
+      <div class="games-grid">
+        <a href="stars.html" class="game-card">
+          <span class="game-icon">⭐</span>
+          <div class="game-name">Catch the Stars</div>
+          <div class="game-desc">
+            Click as many falling stars as you can before time runs out.<br>
+            Fast reflexes only.
+          </div>
+          <div class="tag-wrap">
+            <span class="tag">quick</span>
+            <span class="tag">fun</span>
+            <span class="tag">reflex</span>
+          </div>
+          <div class="play-btn">Play now ✨</div>
+        </a>
 
-    <div class="controls">
-      <button class="start-btn" id="startBtn">Start Game</button>
-    </div>
+        <a href="memory.html" class="game-card">
+          <span class="game-icon">🧠</span>
+          <div class="game-name">Memory Flip</div>
+          <div class="game-desc">
+            Match all the cards with the fewest moves possible.<br>
+            Cute little brain flex.
+          </div>
+          <div class="tag-wrap">
+            <span class="tag">memory</span>
+            <span class="tag">chill</span>
+            <span class="tag">focus</span>
+          </div>
+          <div class="play-btn">Play now 🧠</div>
+        </a>
 
-    <div class="game-area" id="gameArea">
-      <div class="game-overlay" id="overlay">
-        <div class="overlay-card">
-          <h2>Ready? 🌌</h2>
-          <p>
-            Catch as many stars as you can in 20 seconds.<br>
-            Lets see what you got 😎
-          </p>
-          <button class="start-btn" id="overlayStartBtn">Play Now</button>
-        </div>
+        <a href="comets.html" class="game-card">
+          <span class="game-icon">🚀</span>
+          <div class="game-name">Dodge the Comets</div>
+          <div class="game-desc">
+            Move left and right, avoid the falling comets, survive as long as possible.<br>
+            Tiny chaos, but elegant.
+          </div>
+          <div class="tag-wrap">
+            <span class="tag">arcade</span>
+            <span class="tag">survival</span>
+            <span class="tag">chaos</span>
+          </div>
+          <div class="play-btn">Play now 🚀</div>
+        </a>
+      </div>
+
+      <div class="hint-box">
+        Tiny challenge, tiny chaos, tiny fun.<br>
+        Pick one and see who wins: you or the universe ✨
+      </div>
+
+      <div class="bottom-note">
+        Best played with dramatic focus and slightly elite reflexes.
       </div>
     </div>
   </div>
 
   <script>
-    const gameArea = document.getElementById("gameArea");
-    const scoreEl = document.getElementById("score");
-    const timeEl = document.getElementById("time");
-    const bestEl = document.getElementById("best");
-    const startBtn = document.getElementById("startBtn");
-    const overlay = document.getElementById("overlay");
-    const overlayStartBtn = document.getElementById("overlayStartBtn");
     const bgStars = document.getElementById("bgStars");
 
-    let score = 0;
-    let timeLeft = 20;
-    let gameRunning = false;
-    let timerInterval = null;
-    let spawnInterval = null;
-
-    let bestScore = localStorage.getItem("catchTheStarsBest") || 0;
-    bestEl.textContent = bestScore;
-
-    // Background twinkle stars
     function createBackgroundStars() {
       for (let i = 0; i < 70; i++) {
         const s = document.createElement("div");
@@ -339,138 +349,8 @@
         bgStars.appendChild(s);
       }
     }
+
     createBackgroundStars();
-
-    function startGame() {
-      // reset
-      clearGame();
-      score = 0;
-      timeLeft = 20;
-      gameRunning = true;
-      scoreEl.textContent = score;
-      timeEl.textContent = timeLeft;
-      overlay.classList.add("hidden");
-
-      // timer
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        timeEl.textContent = timeLeft;
-
-        if (timeLeft <= 0) {
-          endGame();
-        }
-      }, 1000);
-
-      // spawn stars
-      spawnInterval = setInterval(() => {
-        spawnStar();
-      }, 550);
-    }
-
-    function spawnStar() {
-      if (!gameRunning) return;
-
-      const star = document.createElement("div");
-      star.classList.add("star");
-      star.textContent = "⭐";
-
-      const areaWidth = gameArea.clientWidth;
-      const randomX = Math.random() * (areaWidth - 50);
-      const duration = (Math.random() * 1.5 + 2.5).toFixed(2); // 2.5 - 4 sec
-
-      star.style.left = randomX + "px";
-      star.style.top = "-40px";
-      star.style.animationDuration = duration + "s";
-
-      star.addEventListener("click", () => {
-        if (!gameRunning) return;
-        score++;
-        scoreEl.textContent = score;
-        createPop("+1", star.offsetLeft, star.offsetTop);
-        star.remove();
-      });
-
-      star.addEventListener("animationend", () => {
-        star.remove();
-      });
-
-      gameArea.appendChild(star);
-    }
-
-    function createPop(text, x, y) {
-      const pop = document.createElement("div");
-      pop.classList.add("pop");
-      pop.textContent = text;
-      pop.style.left = x + "px";
-      pop.style.top = y + "px";
-      gameArea.appendChild(pop);
-
-      setTimeout(() => {
-        pop.remove();
-      }, 700);
-    }
-
-    function endGame() {
-      gameRunning = false;
-      clearInterval(timerInterval);
-      clearInterval(spawnInterval);
-
-      // remove leftover stars
-      document.querySelectorAll(".star").forEach(star => star.remove());
-
-      if (score > bestScore) {
-        bestScore = score;
-        localStorage.setItem("catchTheStarsBest", bestScore);
-        bestEl.textContent = bestScore;
-      }
-
-      let message = "Nice reflexes 👀";
-      if (score >= 30) {
-        message = "Jago amat jadi pro player aja 🌟";
-      } else if (score >= 20) {
-        message = "Widiii bole uga lau ✨";
-      } else if (score >= 10) {
-        message = "Yahhh oke la ya 😎";
-      }
-
-      overlay.innerHTML = `
-        <div class="overlay-card">
-          <h2>Time's up! ⏳</h2>
-          <p>
-            Your score: <strong>${score}</strong><br>
-            ${message}
-          </p>
-          <button class="start-btn" id="playAgainBtn">Play Again</button>
-        </div>
-      `;
-      overlay.classList.remove("hidden");
-
-      document.getElementById("playAgainBtn").addEventListener("click", startGame);
-    }
-
-    function clearGame() {
-      clearInterval(timerInterval);
-      clearInterval(spawnInterval);
-      document.querySelectorAll(".star").forEach(star => star.remove());
-
-      // restore default overlay if needed
-      if (!overlay.querySelector("#overlayStartBtn") && !overlay.querySelector("#playAgainBtn")) {
-        overlay.innerHTML = `
-          <div class="overlay-card">
-            <h2>Ready? 🌌</h2>
-            <p>
-              Catch as many stars as you can in 20 seconds.<br>
-              Fast hands only 😎
-            </p>
-            <button class="start-btn" id="overlayStartBtn">Play Now</button>
-          </div>
-        `;
-        document.getElementById("overlayStartBtn").addEventListener("click", startGame);
-      }
-    }
-
-    startBtn.addEventListener("click", startGame);
-    overlayStartBtn.addEventListener("click", startGame);
   </script>
 </body>
 </html>
