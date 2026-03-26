@@ -116,8 +116,10 @@
     }
 
     .rocket-btn:hover {
-      transform: translateY(-2px) scale(1.05);
-      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px) scale(1.08);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
     }
 
     .rocket-btn.launch {
@@ -174,19 +176,20 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
     }
 
-    .menu-btn:hover {
-      transform: translateY(-3px) scale(1.03);
-      background: rgba(255, 255, 255, 0.18);
-    }
-
+    /* DEFAULT active (Songs) */
     .menu-btn.primary {
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
       border: none;
       box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
     }
 
-    .menu-btn.primary:hover {
-      filter: brightness(1.06);
+    /* INI YANG KAMU MAU:
+       pas hover -> ngegede + JADI BIRU JUGA */
+    .menu-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+      filter: brightness(1.05);
     }
 
     .mini-actions {
@@ -211,9 +214,13 @@
       transition: all 0.3s ease;
     }
 
+    /* mini button hover biru juga */
     .mini-btn:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px) scale(1.05);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      color: white;
+      box-shadow: 0 12px 26px rgba(99, 102, 241, 0.38);
     }
 
     .note-card {
@@ -346,6 +353,8 @@
       <div class="note-card" id="noteCard">
         Tiny corner on the internet. Pick whatever feels right.
       </div>
+    </div>
+  </div>
 
   <div class="secret-popup" id="secretPopup">
     <strong>Congrats you found the easter egg 👀</strong>
@@ -354,7 +363,6 @@
 
   <div class="rocket-popup" id="rocketPopup">
     <strong>TO INFINITY AND BEYOND ✨</strong>
-    
   </div>
 
   <script>
@@ -562,7 +570,7 @@
     // rocket launch
     function launchRocket() {
       rocketBtn.classList.remove("launch");
-      void rocketBtn.offsetWidth; // reset animation
+      void rocketBtn.offsetWidth;
       rocketBtn.classList.add("launch");
 
       rocketPopup.classList.add("show");
