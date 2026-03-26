@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breathe</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
+      color: white;
+      position: relative;
+    }
+
+    .bg-stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.8); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .top-bar {
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    /* BACK BUTTON HOVER -> BIRU */
+    .back-btn:hover {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+    }
+
+    .main-card {
+      width: 100%;
+      max-width: 980px;
+      padding: 34px 20px 28px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 7vw, 4rem);
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 10px;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+    }
+
+    .subtitle {
+      color: #cbd5e1;
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 680px;
+      margin: 0 auto 24px;
+    }
+
+    .breathe-box {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto 24px;
+      padding: 26px 18px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .phase {
+      font-size: 1rem;
+      color: #cbd5e1;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .orb-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 220px;
+      margin-bottom: 18px;
+    }
+
+    .orb {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #6366f1 70%);
+      box-shadow:
+        0 0 35px rgba(56, 189, 248, 0.35),
+        0 0 70px rgba(99, 102, 241, 0.25);
+      animation: breathe 8s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(0.9);
+        box-shadow:
+          0 0 25px rgba(56, 189, 248, 0.25),
+          0 0 50px rgba(99, 102, 241, 0.18);
+      }
+      50% {
+        transform: scale(1.35);
+        box-shadow:
+          0 0 45px rgba(56, 189, 248, 0.45),
+          0 0 90px rgba(99, 102, 241, 0.35);
+      }
+    }
+
+    .helper-text {
+      color: #cbd5e1;
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+
+    .action-btn {
+      border: none;
+      cursor: pointer;
+      min-width: 180px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    /* TOMBOL SAMA KAYAK TADI -> HOVER BIRU */
+    .action-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+      filter: brightness(1.05);
+    }
+
+    .note-card {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 26px 20px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+      text-align: left;
+    }
+
+    .note-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+    }
+
+    .note-title {
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      color: #ffffff;
+      margin-bottom: 10px;
+      min-height: 42px;
+    }
+
+    .note-text {
+      color: #cbd5e1;
+      line-height: 1.9;
+      font-size: 1.02rem;
+      min-height: 88px;
+    }
+
+    .tiny-note {
+      margin-top: 16px;
+      color: rgba(203, 213, 225, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 700px) {
+      .main-card {
+        padding: 28px 14px 22px;
+        border-radius: 24px;
+      }
+
+      .breathe-box,
+      .note-card {
+        padding: 22px 14px;
+        border-radius: 22px;
+      }
+
+      .action-btn {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .orb-wrap {
+        height: 190px;
+      }
+
+      .orb {
+        width: 105px;
+        height: 105px;
+      }
+
+      .note-title {
+        min-height: auto;
+      }
+
+      .note-text {
+        min-height: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-stars" id="bgStars"></div>
+
+  <div class="container">
+    <div class="top-bar">
+      <a href="index.html" class="back-btn">← Back</a>
+    </div>
+
+    <div class="main-card">
+      <div class="eyebrow">A tiny pause button</div>
+      <h1>Breathe 🌙</h1>
+      <p class="subtitle">
+        No rush.  
+        You can stay here for a second.
+      </p>
+
+      <div class="breathe-box">
+        <div class="phase" id="phaseText">Breathe in…</div>
+
+        <div class="orb-wrap">
+          <div class="orb"></div>
+        </div>
+
+        <div class="helper-text">
+          Follow the orb for a few seconds.<br>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="action-btn" onclick="newNote()">Need a tiny note?</button>
+        <button class="action-btn" onclick="newSoftReset()">Soft reset</button>
+      </div>
+
+      <div class="note-card">
+        <div class="note-badge" id="noteBadge">🌿 reset mode</div>
+        <div class="note-title" id="noteTitle">Take five.</div>
+        <div class="note-text" id="noteText">
+          You don’t have to fix everything right now.<br>
+          A small pause still counts.
+        </div>
+        <div class="tiny-note">
+          This page is just here in case things feel a little too loud.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Background stars
+    const bgStars = document.getElementById("bgStars");
+
+    function createBackgroundStars() {
+      for (let i = 0; i < 70; i++) {
+        const s = document.createElement("div");
+        s.classList.add("bg-star");
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.top = Math.random() * 100 + "vh";
+        s.style.animationDelay = (Math.random() * 3) + "s";
+        s.style.opacity = Math.random();
+        bgStars.appendChild(s);
+      }
+    }
+    createBackgroundStars();
+
+    // Breathing phase text
+    const phaseText = document.getElementById("phaseText");
+    const phases = ["Breathe in…", "Hold…", "Breathe out…", "Rest…"];
+    let phaseIndex = 0;
+
+    setInterval(() => {
+      phaseIndex = (phaseIndex + 1) % phases.length;
+      phaseText.textContent = phases[phaseIndex];
+    }, 2000);
+
+    // Notes
+    const noteBadge = document.getElementById("noteBadge");
+    const noteTitle = document.getElementById("noteTitle");
+    const noteText = document.getElementById("noteText");
+
+    const comfortNotes = [
+      { badge: "🌿 reset mode", title: "Take five.", text: "You don’t have to fix everything right now.<br>A small pause still counts." },
+      { badge: "☁️ slow down", title: "One thing at a time.", text: "Not everything has to be solved at once.<br>Just the next small thing is enough." },
+      { badge: "🌙 easy does it", title: "You can slow down.", text: "Resting for a bit doesn’t mean you’re falling behind.<br>It just means you’re human." },
+      { badge: "🫧 tiny reset", title: "Pause first.", text: "You’re allowed to breathe before trying again.<br>No one said you have to carry it all in one go." },
+      { badge: "✨ soft reminder", title: "Still doing okay.", text: "Even if today feels messy, that doesn’t erase your effort.<br>You’re doing more than you think." },
+      { badge: "🌌 low-pressure mode", title: "No rush.", text: "Nothing good comes from panicking through everything.<br>Take a second. Then continue." },
+      { badge: "🌿 soft mode", title: "Easy now.", text: "You can take this slower than your stress is telling you to.<br>That’s allowed." },
+      { badge: "☁️ tiny comfort", title: "You’re allowed to pause.", text: "A short reset is still a reset.<br>Nothing about that is wasted." },
+      { badge: "🌙 breathing room", title: "Less pressure.", text: "You do not need to carry the entire day all at once.<br>Just this moment is enough." },
+      { badge: "✨ gentle note", title: "Not behind.", text: "Feeling tired isn’t the same as failing.<br>Sometimes it just means you need a minute." },
+      { badge: "🌿 calm corner", title: "This can wait.", text: "Not everything deserves urgency.<br>Some things can be handled later." },
+      { badge: "🫧 low-stress mode", title: "Keep it soft.", text: "If today feels loud, you’re allowed to move gently through it." },
+      { badge: "☁️ slow mode", title: "No speedrun needed.", text: "There is absolutely no prize for panicking faster." },
+      { badge: "🌙 tiny reminder", title: "Breathe first.", text: "Before doing the next thing, just exhale once properly." },
+      { badge: "✨ soft signal", title: "Still counts.", text: "Even if all you did was survive today a little softer, that still counts." },
+      { badge: "🌿 reset mode", title: "Pause = progress.", text: "Rest isn’t separate from progress sometimes.<br>It’s part of it." },
+      { badge: "☁️ quiet mode", title: "Less noise.", text: "You don’t need every answer right this second." },
+      { badge: "🌙 gentle pace", title: "You can slow down.", text: "If your brain is sprinting, your body doesn’t have to follow." },
+      { badge: "✨ easy mode", title: "Take one step.", text: "Not ten. Not all of it.<br>Just the next small thing." },
+      { badge: "🌿 soft corner", title: "Stay here a sec.", text: "No one is rushing you in this little corner." },
+      { badge: "☁️ breathe break", title: "Tiny reset approved.", text: "Your nervous system would like to file an official thank you." },
+      { badge: "🌙 moon mode", title: "Quiet is good too.", text: "Not every day has to be loud or impressive." },
+      { badge: "✨ low-pressure note", title: "That can wait.", text: "Some problems improve after a pause.<br>Not every problem wants urgency." },
+      { badge: "🌿 soft reminder", title: "You’re still okay.", text: "Even if the day feels messy, it doesn’t erase your effort." },
+      { badge: "☁️ reset signal", title: "Less weight.", text: "You don’t have to hold everything tightly all the time." },
+      { badge: "🌙 pause point", title: "Take a breath.", text: "Like actually. Right now.<br>Long inhale. Slower exhale." },
+      { badge: "✨ tiny grace", title: "Be nice to yourself.", text: "Your brain does not need to become your manager right now." },
+      { badge: "🌿 calm mode", title: "Still enough.", text: "What you can do today is enough for today." },
+      { badge: "☁️ softer route", title: "Try gentler.", text: "Sometimes the softer route is the smarter one." },
+      { badge: "🌙 breathe space", title: "No emergency.", text: "Just because it feels urgent doesn’t always mean it is." },
+      { badge: "✨ quiet comfort", title: "This is allowed.", text: "Doing less for a moment is allowed." },
+      { badge: "🌿 low-pressure mode", title: "Unclench a little.", text: "Jaw. Shoulders. Forehead.<br>All of it." },
+      { badge: "☁️ pause corner", title: "Not all at once.", text: "There is no rule that says you must handle everything in one go." },
+      { badge: "🌙 tiny peace", title: "Small calm matters.", text: "A little peace is still peace." },
+      { badge: "✨ rest logic", title: "Strategic pause.", text: "This is not quitting. This is maintenance." },
+      { badge: "🌿 softer hours", title: "Go gently.", text: "If today needs a softer pace, let it." },
+      { badge: "☁️ kind mode", title: "Be kinder.", text: "Especially to the version of you that’s trying anyway." },
+      { badge: "🌙 night-sky note", title: "Still here.", text: "Still standing is underrated sometimes." },
+      { badge: "✨ small comfort", title: "You can exhale now.", text: "Nothing bad happens if you loosen your grip a little." },
+      { badge: "🌿 reset room", title: "This counts too.", text: "A minute of calm is not wasted time." },
+      { badge: "☁️ ease mode", title: "Less force.", text: "You don’t have to force your way through every single moment." },
+      { badge: "🌙 pause signal", title: "Hold less.", text: "Not every thought needs to be carried to the next hour." },
+      { badge: "✨ soft permission", title: "Take the break.", text: "You actually do have permission." },
+      { badge: "🌿 slow corner", title: "Gentle works too.", text: "Gentle doesn’t mean weak. It means sustainable." },
+      { badge: "☁️ tiny calm", title: "Rest a bit.", text: "Your brain can be dramatic. The body still needs a pause." },
+      { badge: "🌙 breathing note", title: "Let the pace drop.", text: "There is no audience waiting for you to hurry." },
+      { badge: "✨ no-rush mode", title: "Not late.", text: "You’re not late to your own life." },
+      { badge: "🌿 soft light", title: "Lower the pressure.", text: "If it’s too much, reduce the weight first." },
+      { badge: "☁️ mini sanctuary", title: "Stay tiny.", text: "Keep the goal tiny enough to survive the moment." },
+      { badge: "🌙 calm reset", title: "Enough for now.", text: "Right now doesn’t need perfect. It needs manageable." },
+      { badge: "✨ softer thinking", title: "Don’t spiral.", text: "The brain loves drama. You don’t have to join it." },
+      { badge: "🌿 tiny mercy", title: "Give yourself a little grace.", text: "You would probably be nicer to someone else in your position." },
+      { badge: "☁️ pause window", title: "Look up.", text: "A second away from the spiral helps more than you think." },
+      { badge: "🌙 little moon note", title: "Quiet is productive too.", text: "Recovery is not the opposite of progress." },
+      { badge: "✨ soft anchor", title: "Come back to now.", text: "Not later. Not the whole week. Just now." },
+      { badge: "🌿 rest mode", title: "Take the easier step.", text: "The easier step still moves you forward." },
+      { badge: "☁️ gentle orbit", title: "Float a little.", text: "You don’t need to sprint through everything." },
+      { badge: "🌙 calm orbit", title: "No need to prove anything.", text: "Not to this page. Not to the moment." },
+      { badge: "✨ quiet orbit", title: "Breathe and continue later.", text: "Later is still a valid option." },
+      { badge: "🌿 safe pause", title: "Pause without guilt.", text: "You’re allowed to stop without turning it into a moral failure." },
+      { badge: "☁️ softer reset", title: "Lower the volume.", text: "In your head too, if possible." },
+      { badge: "🌙 hush mode", title: "Take the softer route.", text: "It might actually get you farther." },
+      { badge: "✨ tiny comfort", title: "This moment is enough.", text: "You do not need to solve the whole day from inside one minute." },
+      { badge: "🌿 breathing corner", title: "Slow is smart.", text: "When overwhelmed, slower is often smarter." },
+      { badge: "☁️ soft approval", title: "Break accepted.", text: "Officially. No paperwork needed." },
+      { badge: "🌙 calm approval", title: "You can rest first.", text: "Nothing says the next step has to happen immediately." },
+      { badge: "✨ night mode", title: "Let your shoulders drop.", text: "That tension isn’t helping as much as it thinks." },
+      { badge: "🌿 gentle green light", title: "Proceed softly.", text: "Softly still counts as forward." },
+      { badge: "☁️ low-demand mode", title: "Do less on purpose.", text: "Sometimes less is exactly the right amount." },
+      { badge: "🌙 moonlit reset", title: "Pause and return.", text: "You can always come back to the hard thing." },
+      { badge: "✨ comfort signal", title: "Not every thought is urgent.", text: "Some of them can wait outside." },
+      { badge: "🌿 quiet support", title: "You’re handling a lot.", text: "Even if it doesn’t look dramatic from the outside." },
+      { badge: "☁️ easy reset", title: "Soften the day.", text: "It doesn’t all have to be intense." },
+      { badge: "🌙 stillness mode", title: "Stay here a second longer.", text: "No one’s chasing you in this tab." },
+      { badge: "✨ tiny grounding", title: "Feel your breath.", text: "That’s enough for one moment." },
+      { badge: "🌿 low-noise mode", title: "Make it smaller.", text: "Smaller tasks. Smaller pressure. Smaller expectations." },
+      { badge: "☁️ little grace", title: "Be on your own side.", text: "That’s the move right now." },
+      { badge: "🌙 dim the stress", title: "Reduce, don’t force.", text: "Less weight first. Then action." },
+      { badge: "✨ soft weather", title: "Let today be softer.", text: "Some days are for gentler wins." },
+      { badge: "🌿 tiny reset room", title: "Hold less tightly.", text: "The grip can loosen a little." },
+      { badge: "☁️ calmer route", title: "No performance needed.", text: "You don’t need to be impressive in here." },
+      { badge: "🌙 slower pulse", title: "Let the moment settle.", text: "You don’t have to chase every anxious thought." },
+      { badge: "✨ reset whisper", title: "One breath helps.", text: "A real one. Not the tiny stress-breaths." },
+      { badge: "🌿 soft horizon", title: "There’s time.", text: "Maybe not for everything. But enough for the next thing." },
+      { badge: "☁️ pause gently", title: "You can return later.", text: "Stepping back is not the same as giving up." },
+      { badge: "🌙 calm signal", title: "Not a race.", text: "Especially not against yourself." },
+      { badge: "✨ easy little note", title: "Enough is enough.", text: "You don’t need extra suffering to make effort valid." },
+      { badge: "🌿 restful orbit", title: "This is maintenance.", text: "Not laziness. Maintenance." },
+      { badge: "☁️ tiny quiet", title: "Keep the pressure low.", text: "The moment works better that way." },
+      { badge: "🌙 softer landing", title: "Come down a little.", text: "Your nervous system would love that." },
+      { badge: "✨ gentle signal", title: "You’re okay for now.", text: "For this minute, that’s enough." },
+      { badge: "🌿 breath-first mode", title: "Pause before panic.", text: "That order matters more than you think." },
+      { badge: "☁️ softer frame", title: "You don’t need to earn rest.", text: "You’re already allowed to have it." },
+      { badge: "🌙 tiny moon break", title: "Quiet can be the plan.", text: "Not every answer has to be loud." },
+      { badge: "✨ reset accepted", title: "You’re allowed to be tired.", text: "And still worthy. And still doing enough." },
+      { badge: "🌿 soft reminder", title: "A calmer version still counts.", text: "You don’t need to be at 100% to keep going." },
+      { badge: "☁️ last little note", title: "Stay gentle.", text: "That might be the smartest thing you do today." }
+    ];
+
+    const softResets = [
+      { badge: "🧃 tiny mission", title: "Drink some water.", text: "Seriously.<br>Hydration first, then we continue." },
+      { badge: "🪟 micro break", title: "Look away for 20 seconds.", text: "Stretch your shoulders a little.<br>That counts as progress too." },
+      { badge: "📌 gentle reset", title: "Pick just one thing.", text: "Not the whole list.<br>Just one small thing you can finish next." },
+      { badge: "🌿 brain cooldown", title: "Unclench your jaw.", text: "Relax your shoulders too.<br>You’d be surprised how much that helps." },
+      { badge: "☕ pause button", title: "Step away for a minute.", text: "A tiny break now is better than crashing later." },
+      { badge: "🫗 tiny refill", title: "Refill water.", text: "Future you would actually appreciate this more than you think." },
+      { badge: "🪑 posture check", title: "Sit back properly.", text: "Your spine has been through enough today." },
+      { badge: "🫧 reset move", title: "Take 3 slow breaths.", text: "Like real ones.<br>Not those tiny panic breaths." },
+      { badge: "📱 micro rule", title: "Put your phone down for 60 seconds.", text: "Yes, even if it feels emotionally complicated." },
+      { badge: "🌿 small win", title: "Delete one tiny task.", text: "If it doesn’t truly matter, let it go." },
+      { badge: "🧸 soft task", title: "Do the easiest thing first.", text: "Momentum loves a low-effort entrance." },
+      { badge: "🪟 eye break", title: "Look at something far away.", text: "Your eyeballs deserve a brief vacation." },
+      { badge: "☁️ brain reset", title: "Stand up for 30 seconds.", text: "That’s it.<br>Very exclusive wellness advice." },
+      { badge: "🌙 slow down", title: "Stop multitasking.", text: "Pick one tab. One thought. One thing." },
+      { badge: "✨ soft checkpoint", title: "Blink on purpose.", text: "Apparently this is a premium feature now." },
+      { badge: "🧃 tiny fuel", title: "Eat a small snack.", text: "A dramatic brain is often just a hungry brain." },
+      { badge: "🪴 soft reset", title: "Touch grass soon.", text: "Or at least look at a plant if available." },
+      { badge: "📌 mini plan", title: "Write 1 next step.", text: "Not the whole plan. Just the next move." },
+      { badge: "🌿 body check", title: "Drop your shoulders.", text: "You’ve been carrying invisible tension again." },
+      { badge: "☕ low-pressure task", title: "Make tea or coffee.", text: "Rituals count as emotional support." },
+      { badge: "🫧 micro victory", title: "Close one useless tab.", text: "You do not need 27 open windows to prove you care." },
+      { badge: "🪟 light reset", title: "Open a window.", text: "Fresh air is suspiciously effective sometimes." },
+      { badge: "📱 calm mode", title: "Mute notifications for 10 minutes.", text: "The world can survive without immediate access to you." },
+      { badge: "🌙 tiny reset", title: "Wash your face.", text: "Instant character development." },
+      { badge: "✨ tiny task", title: "Clear your desk a little.", text: "Even one object counts." },
+      { badge: "🧃 energy check", title: "Sip water before deciding you’re doomed.", text: "Important scientific process." },
+      { badge: "🪑 stretch mode", title: "Roll your neck gently.", text: "You’ve probably been turning into a shrimp." },
+      { badge: "📌 soft plan", title: "Set a 5-minute timer.", text: "Do the task badly for 5 minutes only." },
+      { badge: "🌿 nervous system", title: "Put both feet on the floor.", text: "Grounding, but make it low effort." },
+      { badge: "☕ tiny comfort", title: "Hold something warm.", text: "Mug therapy is real enough." },
+      { badge: "🫧 cleanup", title: "Throw away one piece of trash.", text: "A tiny cleaner space can be weirdly helpful." },
+      { badge: "🪟 eye relief", title: "Look away from the screen.", text: "20 seconds minimum. Your eyes are filing complaints." },
+      { badge: "📱 reset scroll", title: "Stop scrolling mid-scroll.", text: "A bold and courageous move." },
+      { badge: "🌙 task shrink", title: "Make the task smaller.", text: "Cut it in half. Then half again if needed." },
+      { badge: "✨ brain quiet", title: "Write down the noisy thought.", text: "Get it out of your head’s premium suite." },
+      { badge: "🧃 hydration law", title: "Drink water now.", text: "This page is unfortunately serious about this one." },
+      { badge: "🪴 window mode", title: "Look outside for 1 minute.", text: "Sky subscription still active." },
+      { badge: "📌 list edit", title: "Delete one non-essential task.", text: "A to-do list is not a personality test." },
+      { badge: "🌿 gentle move", title: "Stretch your hands.", text: "Especially if you’ve been typing like a maniac." },
+      { badge: "☕ micro break", title: "Walk to another room.", text: "A dramatic relocation helps sometimes." },
+      { badge: "🫧 calmer brain", title: "Say the next task out loud.", text: "It sounds less evil that way." },
+      { badge: "🪟 soft focus", title: "Close your eyes for 10 seconds.", text: "That’s legal and surprisingly effective." },
+      { badge: "📱 noise cut", title: "Turn off one distracting app.", text: "At least for a little while." },
+      { badge: "🌙 low-demand reset", title: "Do the task uglier.", text: "Perfection is banned for 5 minutes." },
+      { badge: "✨ tiny reboot", title: "Wash your hands.", text: "Low effort. Weirdly effective reset." },
+      { badge: "🧃 snack check", title: "Have a bite of something.", text: "The brain can be dramatic when underfed." },
+      { badge: "🪑 body reset", title: "Sit differently.", text: "Your current posture is probably plotting against you." },
+      { badge: "📌 next move", title: "Only do step one.", text: "Step two has not been invited yet." },
+      { badge: "🌿 calm move", title: "Open the task. Don’t do it yet.", text: "Just reduce the fear aura first." },
+      { badge: "☕ soft ritual", title: "Make the workspace nicer.", text: "Tiny lighting adjustment = emotional support." },
+      { badge: "🫧 one-tab mode", title: "Close all but what you need.", text: "Your laptop is not a cry for help." },
+      { badge: "🪟 breathe break", title: "Take a window stare break.", text: "Classic. Effective. Timeless." },
+      { badge: "📱 focus mode", title: "Airplane mode for 5 minutes.", text: "Main character isolation arc." },
+      { badge: "🌙 reset the pressure", title: "Lower the bar.", text: "Do the bare minimum version first." },
+      { badge: "✨ tiny clean", title: "Wipe your screen.", text: "Visual clarity. Emotional clarity. Maybe." },
+      { badge: "🧃 refill check", title: "Refill your bottle.", text: "Hydration side quest unlocked." },
+      { badge: "🪴 touch grass mode", title: "Stand near a window.", text: "Outdoor energy, indoor effort." },
+      { badge: "📌 one-line plan", title: "Write one sentence.", text: "Not the essay. Just one line." },
+      { badge: "🌿 nervous system check", title: "Relax your tongue.", text: "Yes really. You’re probably tensing it." },
+      { badge: "☕ cozy reset", title: "Get a warmer drink.", text: "Comfort is infrastructure." },
+      { badge: "🫧 tiny clear", title: "Clear 10 cm of desk.", text: "That is enough for symbolic victory." },
+      { badge: "🪟 horizon mode", title: "Look farther away.", text: "Your eyes need less spreadsheet and more horizon." },
+      { badge: "📱 app discipline", title: "Close the app you keep reopening.", text: "You know the one." },
+      { badge: "🌙 kinder task", title: "Rename the task.", text: "Make it sound less threatening." },
+      { badge: "✨ anti-spiral", title: "Set a 3-minute timer.", text: "Start before the brain writes a documentary." },
+      { badge: "🧃 tiny recovery", title: "Take one sip and one breath.", text: "Minimal effort. Maximum respect." },
+      { badge: "🪑 anti-shrimp mode", title: "Straighten your back.", text: "We are evolving beyond desk shrimp." },
+      { badge: "📌 softer checklist", title: "Circle the easiest item.", text: "That’s your next mission." },
+      { badge: "🌿 mini grounding", title: "Notice 3 things around you.", text: "Any 3. Nothing deep required." },
+      { badge: "☕ low-stress routine", title: "Refill your cup, then come back.", text: "A noble quest." },
+      { badge: "🫧 little order", title: "Organize one file.", text: "Just one. We’re not becoming corporate." },
+      { badge: "🪟 face the sky", title: "Look outside for clouds.", text: "Or at least pretend the weather is helping." },
+      { badge: "📱 reduce chaos", title: "Silence one group chat.", text: "You deserve less digital yelling." },
+      { badge: "🌙 task mercy", title: "Cut the goal in half.", text: "Then call that the win if needed." },
+      { badge: "✨ soft interruption", title: "Pause before opening another tab.", text: "We do not need a tab expansion pack." },
+      { badge: "🧃 snack logic", title: "Eat before despairing.", text: "A surprisingly robust strategy." },
+      { badge: "🪑 unclench mode", title: "Relax your hands.", text: "Keyboard death grip is not required." },
+      { badge: "📌 tiny order", title: "Write the first 3 words.", text: "Momentum starts embarrassingly small sometimes." },
+      { badge: "🌿 body mercy", title: "Shake out your arms.", text: "Your body did not sign up for statue mode." },
+      { badge: "☕ comfort protocol", title: "Make the room cozier.", text: "Lamp on. Harsh light off if possible." },
+      { badge: "🫧 one-minute reset", title: "Walk 20 steps.", text: "We’re doing luxury wellness now." },
+      { badge: "🪟 eye freedom", title: "Stop staring at pixels.", text: "Even briefly. Your eyeballs deserve rights." },
+      { badge: "📱 chaos limit", title: "Close one distracting notification.", text: "Not all of them. Just one tiny victory." },
+      { badge: "🌙 easier version", title: "Do the messy draft.", text: "Perfection can arrive uninvited later." },
+      { badge: "✨ tiny focus", title: "Set one tiny intention.", text: "What is the next smallest useful move?" },
+      { badge: "🧃 refill ritual", title: "Take 3 sips slowly.", text: "This is now a sacred hydration ceremony." },
+      { badge: "🪑 desk reset", title: "Move your chair back.", text: "Create space. Literally." },
+      { badge: "📌 calm structure", title: "Put the task in order.", text: "1. Start. 2. Continue. 3. Stop overthinking." },
+      { badge: "🌿 breathe + move", title: "Inhale, stretch, exhale.", text: "Congratulations, you are now a functioning organism again." },
+      { badge: "☕ warm reset", title: "Hold your drink with both hands.", text: "Surprisingly elite nervous system trick." },
+      { badge: "🫧 tab cleanse", title: "Close 3 tabs.", text: "Your browser has been through enough." },
+      { badge: "🪟 weather check", title: "Check the sky.", text: "Nature cameo appearance." },
+      { badge: "📱 silence mode", title: "Flip the phone face down.", text: "Out of sight, less psychic damage." },
+      { badge: "🌙 task shrinker", title: "Make the goal embarrassingly easy.", text: "That’s not cheating. That’s strategy." },
+      { badge: "✨ brain declutter", title: "Write the noisy thoughts down.", text: "Let paper hold them for a bit." },
+      { badge: "🧃 final hydration", title: "Water first, panic later.", text: "An evidence-based lifestyle." },
+      { badge: "🪑 tiny stretch", title: "Reach your arms up.", text: "Yes, like a dramatic cat." },
+      { badge: "📌 final reset", title: "Choose one tiny win.", text: "That’s the only objective for now." }
+    ];
+
+    function pickRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function newNote() {
+      const item = pickRandom(comfortNotes);
+      noteBadge.textContent = item.badge;
+      noteTitle.textContent = item.title;
+      noteText.innerHTML = item.text;
+    }
+
+    function newSoftReset() {
+      const item = pickRandom(softResets);
+      noteBadge.textContent = item.badge;
+      noteTitle.textContent = item.title;
+      noteText.innerHTML = item.text;
+    }
+  </script>
+</body>
+</html>

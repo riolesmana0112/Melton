@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dodge the Comets ☄️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81);
+      color: white;
+      position: relative;
+    }
+
+    .bg-stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.8); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .top-bar {
+      width: 100%;
+      max-width: 920px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .back-btn,
+    .restart-btn {
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: 0.3s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .back-btn:hover,
+    .restart-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .title {
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 10px;
+    }
+
+    .title h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #f8fafc;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      margin-bottom: 8px;
+    }
+
+    .title p {
+      color: #cbd5e1;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .stats {
+      display: flex;
+      gap: 15px;
+      margin: 18px 0 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 18px;
+      border-radius: 18px;
+      min-width: 120px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .game-wrap {
+      position: relative;
+      width: min(92vw, 920px);
+      height: min(64vh, 560px);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay-card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      max-width: 430px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .overlay-card h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .overlay-card p {
+      color: #cbd5e1;
+      margin-bottom: 18px;
+      line-height: 1.8;
+    }
+
+    .play-btn {
+      border: none;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+    }
+
+    .play-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    /* ===== PLAYER SHIP FIXED AGAIN ===== */
+    .player {
+      position: absolute;
+      left: 50%;
+      bottom: 42px; /* DI NAIKIN BIAR GA KE-CROP */
+      width: 42px;
+      height: 56px; /* lebih proporsional */
+      z-index: 6;
+      transform: translateX(-50%);
+      transition: left 0.06s linear;
+      pointer-events: none;
+      filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));
+    }
+
+    .ship-core {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 34px;
+      background: linear-gradient(180deg, #e2e8f0, #94a3b8);
+      border-radius: 50% 50% 40% 40%;
+      clip-path: polygon(50% 0%, 100% 55%, 75% 100%, 25% 100%, 0% 55%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .ship-window {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      transform: translateX(-50%);
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #dbeafe, #60a5fa);
+      box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+    }
+
+    .ship-fin-left,
+    .ship-fin-right {
+      position: absolute;
+      bottom: 14px;
+      width: 9px;
+      height: 14px;
+      background: linear-gradient(180deg, #fb7185, #e11d48);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+
+    .ship-fin-left {
+      left: 6px;
+      transform: rotate(-12deg);
+    }
+
+    .ship-fin-right {
+      right: 6px;
+      transform: rotate(12deg);
+    }
+
+    .ship-flame {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 14px;
+      background: linear-gradient(180deg, #fde68a, #f97316);
+      clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
+      animation: flameFlicker 0.18s infinite alternate;
+      filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.4));
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: translateX(-50%) scaleY(1); opacity: 0.9; }
+      100% { transform: translateX(-50%) scaleY(0.8); opacity: 1; }
+    }
+
+    .comet {
+      position: absolute;
+      top: -50px;
+      font-size: 1.8rem;
+      z-index: 4;
+      user-select: none;
+      pointer-events: none;
+      filter: drop-shadow(0 0 12px rgba(255, 180, 120, 0.35));
+    }
+
+    .controls {
+      margin-top: 18px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      border: none;
+      cursor: pointer;
+      min-width: 110px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .control-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .helper {
+      margin-top: 14px;
+      text-align: center;
+      color: rgba(203, 213, 225, 0.85);
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 700px) {
+      .game-wrap {
+        height: 58vh;
+        border-radius: 24px;
+      }
+
+      .stat-box {
+        min-width: 100px;
+        padding: 10px 14px;
+      }
+
+      .stat-value {
+        font-size: 1.2rem;
+      }
+
+      .player {
+        width: 38px;
+        height: 52px;
+        bottom: 38px; /* mobile juga dinaikin */
+      }
+
+      .ship-core {
+        width: 24px;
+        height: 30px;
+      }
+
+      .ship-window {
+        width: 8px;
+        height: 8px;
+      }
+
+      .ship-fin-left,
+      .ship-fin-right {
+        width: 8px;
+        height: 12px;
+      }
+
+      .ship-flame {
+        width: 9px;
+        height: 12px;
+      }
+
+      .comet {
+        font-size: 1.6rem;
+      }
+
+      .control-btn {
+        min-width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-stars" id="bgStars"></div>
+
+  <div class="container">
+    <div class="top-bar">
+      <a href="game.html" class="back-btn">← Back</a>
+      <button class="restart-btn" id="restartBtn">Restart</button>
+    </div>
+
+    <div class="title">
+      <h1>Dodge the Comets ☄️</h1>
+      <p>Move left and right. Survive the tiny cosmic chaos.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-label">Time</div>
+        <div class="stat-value" id="time">0.0s</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Dodged</div>
+        <div class="stat-value" id="dodged">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Best</div>
+        <div class="stat-value" id="best">0.0s</div>
+      </div>
+    </div>
+
+    <div class="game-wrap" id="gameArea">
+      <div class="player" id="player">
+        <div class="ship-core">
+          <div class="ship-window"></div>
+        </div>
+        <div class="ship-fin-left"></div>
+        <div class="ship-fin-right"></div>
+        <div class="ship-flame"></div>
+      </div>
+
+      <div class="overlay" id="overlay">
+        <div class="overlay-card">
+          <h2>Ready? ☄️</h2>
+          <p>
+            Dodge the falling comets as long as you can.<br>
+            Keyboard: ← → or A / D
+          </p>
+          <button class="play-btn" id="startBtn">Play now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="control-btn" id="leftBtn">← Left</button>
+      <button class="control-btn" id="rightBtn">Right →</button>
+    </div>
+
+    <div class="helper">
+      mobile friendly + keyboard friendly = elite tiny arcade
+    </div>
+  </div>
+
+  <script>
+    const bgStars = document.getElementById("bgStars");
+    const gameArea = document.getElementById("gameArea");
+    const player = document.getElementById("player");
+    const overlay = document.getElementById("overlay");
+    const restartBtn = document.getElementById("restartBtn");
+    const leftBtn = document.getElementById("leftBtn");
+    const rightBtn = document.getElementById("rightBtn");
+    const timeEl = document.getElementById("time");
+    const dodgedEl = document.getElementById("dodged");
+    const bestEl = document.getElementById("best");
+
+    let gameRunning = false;
+    let playerX = 0;
+    let playerWidth = 42;
+    let comets = [];
+    let spawnInterval = null;
+    let animationFrame = null;
+    let timerInterval = null;
+    let elapsedTime = 0;
+    let dodged = 0;
+    let startTime = 0;
+
+    let bestTime = parseFloat(localStorage.getItem("dodgeCometsBest")) || 0;
+    bestEl.textContent = bestTime.toFixed(1) + "s";
+
+    function createBackgroundStars() {
+      for (let i = 0; i < 70; i++) {
+        const s = document.createElement("div");
+        s.classList.add("bg-star");
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.top = Math.random() * 100 + "vh";
+        s.style.animationDelay = (Math.random() * 3) + "s";
+        s.style.opacity = Math.random();
+        bgStars.appendChild(s);
+      }
+    }
+
+    function resetPlayer() {
+      const areaWidth = gameArea.clientWidth;
+      playerWidth = player.offsetWidth || 42;
+      playerX = (areaWidth - playerWidth) / 2;
+      player.style.left = playerX + "px";
+      player.style.transform = "none";
+    }
+
+    function movePlayer(direction) {
+      if (!gameRunning) return;
+
+      const areaWidth = gameArea.clientWidth;
+      const step = Math.max(24, areaWidth * 0.06);
+
+      if (direction === "left") {
+        playerX -= step;
+      } else {
+        playerX += step;
+      }
+
+      if (playerX < 0) playerX = 0;
+      if (playerX > areaWidth - playerWidth) playerX = areaWidth - playerWidth;
+
+      player.style.left = playerX + "px";
+    }
+
+    function showReadyOverlay() {
+      overlay.classList.remove("hidden");
+      overlay.innerHTML = `
+        <div class="overlay-card">
+          <h2>Ready? ☄️</h2>
+          <p>
+            Dodge the falling comets as long as you can.<br>
+            Keyboard: ← → or A / D
+          </p>
+          <button class="play-btn" id="startBtn">Play now</button>
+        </div>
+      `;
+
+      document.getElementById("startBtn").addEventListener("click", startGame);
+    }
+
+    function startGame() {
+      clearRunningStuffOnly();
+
+      gameRunning = true;
+      elapsedTime = 0;
+      dodged = 0;
+      timeEl.textContent = "0.0s";
+      dodgedEl.textContent = "0";
+      overlay.classList.add("hidden");
+
+      removeAllComets();
+      resetPlayer();
+
+      startTime = performance.now();
+
+      timerInterval = setInterval(() => {
+        if (!gameRunning) return;
+        elapsedTime = (performance.now() - startTime) / 1000;
+        timeEl.textContent = elapsedTime.toFixed(1) + "s";
+      }, 100);
+
+      spawnInterval = setInterval(() => {
+        spawnComet();
+      }, 520);
+
+      animationFrame = requestAnimationFrame(updateGame);
+    }
+
+    function spawnComet() {
+      if (!gameRunning) return;
+
+      const comet = document.createElement("div");
+      comet.className = "comet";
+      comet.textContent = "☄️";
+
+      const areaWidth = gameArea.clientWidth;
+      const x = Math.random() * (areaWidth - 36);
+      const speed = Math.random() * 2.2 + 3.2;
+
+      comet.style.left = x + "px";
+      comet.style.top = "-40px";
+
+      gameArea.appendChild(comet);
+
+      comets.push({
+        el: comet,
+        x,
+        y: -40,
+        speed,
+        width: 30,
+        height: 30,
+        counted: false
+      });
+    }
+
+    function updateGame() {
+      if (!gameRunning) return;
+
+      const areaHeight = gameArea.clientHeight;
+
+      /* collision area roket disesuaikan sama posisi baru */
+      const playerRect = {
+        x: playerX + 6,
+        y: areaHeight - 42 - player.offsetHeight + 8,
+        width: player.offsetWidth - 12,
+        height: player.offsetHeight - 14
+      };
+
+      for (let i = comets.length - 1; i >= 0; i--) {
+        const comet = comets[i];
+
+        const difficultyBoost = Math.min(elapsedTime * 0.015, 1.8);
+        comet.y += comet.speed + difficultyBoost;
+        comet.el.style.top = comet.y + "px";
+
+        const cometRect = {
+          x: comet.x,
+          y: comet.y,
+          width: comet.width,
+          height: comet.height
+        };
+
+        if (isColliding(playerRect, cometRect)) {
+          endGame();
+          return;
+        }
+
+        if (!comet.counted && comet.y > areaHeight) {
+          comet.counted = true;
+          dodged++;
+          dodgedEl.textContent = dodged;
+        }
+
+        if (comet.y > areaHeight + 60) {
+          comet.el.remove();
+          comets.splice(i, 1);
+        }
+      }
+
+      animationFrame = requestAnimationFrame(updateGame);
+    }
+
+    function isColliding(a, b) {
+      return !(
+        a.x + a.width < b.x ||
+        a.x > b.x + b.width ||
+        a.y + a.height < b.y ||
+        a.y > b.y + b.height
+      );
+    }
+
+    function endGame() {
+      gameRunning = false;
+      clearRunningStuffOnly();
+
+      elapsedTime = (performance.now() - startTime) / 1000;
+      timeEl.textContent = elapsedTime.toFixed(1) + "s";
+
+      if (elapsedTime > bestTime) {
+        bestTime = elapsedTime;
+        localStorage.setItem("dodgeCometsBest", bestTime.toFixed(1));
+        bestEl.textContent = bestTime.toFixed(1) + "s";
+      }
+
+      let message = "Tiny chaos survived 😮‍💨";
+      if (elapsedTime >= 25) {
+        message = "Nahh that was elite. Actual space pilot behavior 🚀";
+      } else if (elapsedTime >= 18) {
+        message = "Okayyy reflexes kinda crazy 👀";
+      } else if (elapsedTime >= 10) {
+        message = "Solid run not gonna lie 😌";
+      } else if (elapsedTime < 5) {
+        message = "That comet had personal beef 😭";
+      }
+
+      overlay.classList.remove("hidden");
+      overlay.innerHTML = `
+        <div class="overlay-card">
+          <h2>Game over ☄️</h2>
+          <p>
+            You survived <strong>${elapsedTime.toFixed(1)}s</strong><br>
+            Dodged: <strong>${dodged}</strong><br>
+            ${message}
+          </p>
+          <button class="play-btn" id="playAgainBtn">Play again</button>
+        </div>
+      `;
+
+      document.getElementById("playAgainBtn").addEventListener("click", resetToReady);
+    }
+
+    function clearRunningStuffOnly() {
+      clearInterval(spawnInterval);
+      clearInterval(timerInterval);
+      cancelAnimationFrame(animationFrame);
+    }
+
+    function removeAllComets() {
+      comets.forEach(comet => comet.el.remove());
+      comets = [];
+    }
+
+    function resetToReady() {
+      gameRunning = false;
+      clearRunningStuffOnly();
+      removeAllComets();
+      elapsedTime = 0;
+      dodged = 0;
+      timeEl.textContent = "0.0s";
+      dodgedEl.textContent = "0";
+      resetPlayer();
+      showReadyOverlay();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
+        movePlayer("left");
+      } else if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
+        movePlayer("right");
+      }
+    });
+
+    leftBtn.addEventListener("click", () => movePlayer("left"));
+    rightBtn.addEventListener("click", () => movePlayer("right"));
+
+    leftBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      movePlayer("left");
+    }, { passive: false });
+
+    rightBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      movePlayer("right");
+    }, { passive: false });
+
+    restartBtn.addEventListener("click", resetToReady);
+
+    window.addEventListener("resize", () => {
+      const areaWidth = gameArea.clientWidth;
+      playerWidth = player.offsetWidth || 42;
+
+      if (playerX > areaWidth - playerWidth) {
+        playerX = Math.max(0, areaWidth - playerWidth);
+      }
+
+      player.style.left = playerX + "px";
+      player.style.transform = "none";
+    });
+
+    createBackgroundStars();
+    resetToReady();
+  </script>
+</body>
+</html>
