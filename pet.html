@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Otter Buddy 🦦</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 230, 0.35), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(255, 182, 193, 0.22), transparent 30%),
+        linear-gradient(180deg, #fff7fb, #ffeef5, #ffdfe9, #ffd2e3);
+      color: #7a3556;
+      position: relative;
+    }
+
+    /* Sakura background */
+    .bg-petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -10vh;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff7fb, #ffb7d5 70%);
+      border-radius: 70% 0 70% 0;
+      opacity: 0.85;
+      filter: blur(0.2px);
+      animation: fallPetal linear infinite;
+      transform: rotate(45deg);
+    }
+
+    @keyframes fallPetal {
+      0% {
+        transform: translateY(-10vh) translateX(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(115vh) translateX(80px) rotate(320deg);
+        opacity: 0.15;
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .top-bar {
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: #8a3d63;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 24px rgba(204, 102, 153, 0.12);
+      font-weight: 600;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 28px rgba(255, 105, 180, 0.2);
+    }
+
+    .main-card {
+      width: 100%;
+      max-width: 980px;
+      padding: 28px 22px 24px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(204, 102, 153, 0.16);
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: #b5658b;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      color: #8a3d63;
+      margin-bottom: 10px;
+      text-shadow: 0 0 18px rgba(255, 182, 193, 0.25);
+    }
+
+    .subtitle {
+      color: #a85b81;
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 680px;
+      margin: 0 auto 22px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      padding: 14px 12px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(204, 102, 153, 0.12);
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: #a85b81;
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #8a2f5b;
+    }
+
+    .buddy-area {
+      position: relative;
+      width: 100%;
+      max-width: 760px;
+      min-height: 470px;
+      margin: 0 auto 20px;
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.32), transparent 28%),
+        linear-gradient(180deg, rgba(255, 244, 248, 0.9), rgba(255, 228, 238, 0.85) 42%, rgba(214, 243, 255, 0.75) 42%, rgba(193, 233, 255, 0.72));
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: inset 0 0 25px rgba(255,255,255,0.2), 0 18px 45px rgba(204, 102, 153, 0.12);
+    }
+
+    .floating-petal {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.65;
+      animation: driftPetal linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes driftPetal {
+      0% {
+        transform: translateX(-20px) translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateX(80px) translateY(500px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .speech-wrap {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(88%, 560px);
+      z-index: 6;
+    }
+
+    .speech-bubble {
+      position: relative;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      padding: 16px 18px;
+      color: #8a3d63;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      box-shadow: 0 12px 28px rgba(204, 102, 153, 0.12);
+      backdrop-filter: blur(10px);
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .speech-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 18px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border-right: 1px solid rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .otter-zone {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 50px;
+    }
+
+    .otter-wrap {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: floatOtter 3.4s ease-in-out infinite;
+      cursor: pointer;
+      user-select: none;
+      z-index: 5;
+    }
+
+    @keyframes floatOtter {
+      0%, 100% {
+        transform: translateY(0px) rotate(-1deg);
+      }
+      50% {
+        transform: translateY(-10px) rotate(1deg);
+      }
+    }
+
+    .otter-wrap.react {
+      animation: none;
+      transform: scale(1.08) rotate(2deg);
+    }
+
+    .water-ring {
+      position: absolute;
+      bottom: 38px;
+      width: 220px;
+      height: 62px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.55), rgba(167, 220, 255, 0.4), rgba(167, 220, 255, 0.12));
+      filter: blur(1px);
+      z-index: 1;
+    }
+
+    .otter {
+      position: relative;
+      font-size: clamp(5.2rem, 12vw, 7rem);
+      line-height: 1;
+      z-index: 3;
+      filter: drop-shadow(0 8px 14px rgba(181, 101, 139, 0.15));
+      transition: transform 0.25s ease;
+    }
+
+    .otter-accessory {
+      position: absolute;
+      top: 48px;
+      right: 44px;
+      font-size: 1.8rem;
+      z-index: 4;
+      pointer-events: none;
+      animation: accessoryBob 2.2s ease-in-out infinite;
+    }
+
+    @keyframes accessoryBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* FIXED: mood chip moved below otter */
+    .mood-chip {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.9);
+      color: #8a2f5b;
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 5;
+      box-shadow: 0 10px 22px rgba(204, 102, 153, 0.1);
+    }
+
+    .meter-wrap {
+      margin: 4px auto 20px;
+      width: 100%;
+      max-width: 720px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .meter-card {
+      background: rgba(255,255,255,0.42);
+      border: 1px solid rgba(255,255,255,0.68);
+      border-radius: 20px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 24px rgba(204, 102, 153, 0.08);
+    }
+
+    .meter-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: #8a3d63;
+      font-weight: 600;
+    }
+
+    .meter-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .love-fill {
+      background: linear-gradient(135deg, #ffb7d5, #ff8fbe);
+      width: 70%;
+    }
+
+    .energy-fill {
+      background: linear-gradient(135deg, #b8e6ff, #7fd3ff);
+      width: 62%;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .action-btn {
+      border: none;
+      cursor: pointer;
+      padding: 14px 12px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #8a2f5b;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 28px rgba(204, 102, 153, 0.12);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: linear-gradient(135deg, #ffd6e7, #ffb7d5);
+      border-color: rgba(255,255,255,0.95);
+      box-shadow: 0 14px 30px rgba(255, 105, 180, 0.18);
+    }
+
+    .tiny-note {
+      color: rgba(181, 101, 139, 0.85);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .popup {
+      position: absolute;
+      font-size: 1.4rem;
+      pointer-events: none;
+      animation: popupRise 0.9s ease forwards;
+      z-index: 9;
+      filter: drop-shadow(0 4px 8px rgba(255, 105, 180, 0.12));
+    }
+
+    @keyframes popupRise {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(0.9);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-45px) scale(1.25);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-card {
+        padding: 22px 14px 18px;
+        border-radius: 24px;
+      }
+
+      .buddy-area {
+        min-height: 440px;
+      }
+
+      .otter-wrap {
+        width: 220px;
+        height: 220px;
+      }
+
+      .water-ring {
+        width: 190px;
+        height: 54px;
+        bottom: 42px;
+      }
+
+      /* FIXED MOBILE */
+      .mood-chip {
+        bottom: 18px;
+        font-size: 0.84rem;
+      }
+
+      .speech-bubble {
+        font-size: 0.92rem;
+        min-height: 96px;
+      }
+
+      .action-btn {
+        font-size: 0.9rem;
+        padding: 13px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-petals" id="bgPetals"></div>
+
+  <div class="container">
+    <div class="top-bar">
+      <a href="index.html" class="back-btn">← Back</a>
+    </div>
+
+    <div class="main-card">
+      <div class="eyebrow">tiny companion mode activated</div>
+      <h1>Otter Buddy 🦦</h1>
+      <p class="subtitle">
+        A tiny floating friend for soft vibes only.<br>
+        Pat, feed, give flowers, or play with your otter buddy 🌸
+      </p>
+
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-label">Mood</div>
+          <div class="stat-value" id="moodText">Happy 🌸</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Favorite</div>
+          <div class="stat-value">Fish + Flowers 🐟🌸</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Vibe</div>
+          <div class="stat-value">Certified Baby 🥺</div>
+        </div>
+      </div>
+
+      <div class="buddy-area" id="buddyArea">
+        <div class="speech-wrap">
+          <div class="speech-bubble" id="speechBubble">
+            hi hello i am tiny and emotionally available 🦦💗
+          </div>
+        </div>
+
+        <div class="otter-zone">
+          <div class="otter-wrap" id="otterWrap">
+            <div class="water-ring"></div>
+            <div class="otter-accessory" id="otterAccessory">🌸</div>
+            <div class="otter">🦦</div>
+            <div class="mood-chip" id="moodChip">Happy 🌸</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="meter-wrap">
+        <div class="meter-card">
+          <div class="meter-head">
+            <span>Love meter 💗</span>
+            <span id="loveValue">70%</span>
+          </div>
+          <div class="meter-track">
+            <div class="meter-fill love-fill" id="loveFill"></div>
+          </div>
+        </div>
+
+        <div class="meter-card">
+          <div class="meter-head">
+            <span>Energy meter ✨</span>
+            <span id="energyValue">62%</span>
+          </div>
+          <div class="meter-track">
+            <div class="meter-fill energy-fill" id="energyFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn" id="patBtn">Pat Otter 🤍</button>
+        <button class="action-btn" id="feedBtn">Feed Fish 🐟</button>
+        <button class="action-btn" id="flowerBtn">Give Flower 🌸</button>
+        <button class="action-btn" id="playBtn">Play Time ✨</button>
+      </div>
+
+      <div class="tiny-note">
+        Try clicking the otter 🦦
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bgPetals = document.getElementById("bgPetals");
+    const buddyArea = document.getElementById("buddyArea");
+    const speechBubble = document.getElementById("speechBubble");
+    const moodText = document.getElementById("moodText");
+    const moodChip = document.getElementById("moodChip");
+    const otterWrap = document.getElementById("otterWrap");
+    const otterAccessory = document.getElementById("otterAccessory");
+
+    const loveFill = document.getElementById("loveFill");
+    const energyFill = document.getElementById("energyFill");
+    const loveValue = document.getElementById("loveValue");
+    const energyValue = document.getElementById("energyValue");
+
+    const patBtn = document.getElementById("patBtn");
+    const feedBtn = document.getElementById("feedBtn");
+    const flowerBtn = document.getElementById("flowerBtn");
+    const playBtn = document.getElementById("playBtn");
+
+    let love = 70;
+    let energy = 62;
+
+    const moods = {
+      happy: "Happy 🌸",
+      sleepy: "Sleepy 😴",
+      hungry: "Hungry 🐟",
+      zoomies: "Zoomies ✨",
+      baby: "Baby Mode 🥺",
+      blushing: "Blushing 💗"
+    };
+
+    let currentMood = moods.happy;
+
+    // ===== BACKGROUND PETALS =====
+    function createBackgroundPetals() {
+      for (let i = 0; i < 35; i++) {
+        const p = document.createElement("div");
+        p.classList.add("petal");
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.animationDuration = (6 + Math.random() * 8) + "s";
+        p.style.animationDelay = (Math.random() * 6) + "s";
+        p.style.opacity = 0.45 + Math.random() * 0.5;
+        p.style.transform = `rotate(${35 + Math.random() * 40}deg) scale(${0.8 + Math.random() * 0.8})`;
+        bgPetals.appendChild(p);
+      }
+    }
+
+    function createFloatingPetals() {
+      for (let i = 0; i < 10; i++) {
+        const petal = document.createElement("div");
+        petal.classList.add("floating-petal");
+        petal.textContent = "🌸";
+        petal.style.left = Math.random() * 100 + "%";
+        petal.style.top = (-20 - Math.random() * 200) + "px";
+        petal.style.animationDuration = (7 + Math.random() * 6) + "s";
+        petal.style.animationDelay = (Math.random() * 6) + "s";
+        petal.style.fontSize = (0.9 + Math.random() * 0.7) + "rem";
+        buddyArea.appendChild(petal);
+      }
+    }
+
+    createBackgroundPetals();
+    createFloatingPetals();
+
+    // ===== UNIQUE RANDOM SYSTEM (ANTI REPEAT) =====
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    let tapPool = [];
+    let patPool = [];
+    let fishPool = [];
+    let flowerPool = [];
+    let playPool = [];
+
+    const tapLines = [
+      "u clicked me hehe 🦦",
+      "tiny otter has noticed u 💗",
+      "otter approved 🌸",
+      "hello yes i am adorable on purpose",
+      "today we float, not panic",
+      "small friend reporting for duty ✨",
+      "i was literally just floating here",
+      "your presence has improved the pond",
+      "tiny splash mode activated",
+      "u poked the baby 😭"
+    ];
+
+    const patLines = [
+      "head pats accepted with great honor 🥺",
+      "that was premium quality affection",
+      "my tiny otter heart is full now 💗",
+      "pat received. mood improved immediately",
+      "i will remember this forever probably",
+      "soft touch = elite human behavior",
+      "that pat was actually life changing",
+      "i am now 14% more baby",
+      "pat pat pat yes keep going",
+      "emotionally healed by one forehead pat"
+    ];
+
+    const fishLines = [
+      "FISH???? say less 🐟",
+      "this is a five-star meal actually",
+      "otter dining experience unlocked",
+      "i trust u more after this snack",
+      "small snack. massive joy.",
+      "this fish has changed me spiritually",
+      "i love this. i love u. i love fish.",
+      "crunchy? juicy? perfect.",
+      "chef behavior. respect.",
+      "peak cuisine for a tiny gentleman"
+    ];
+
+    const flowerLines = [
+      "for me??? stop that is so cute 🌸",
+      "i will treasure this flower forever",
+      "blush mode activated immediately 💗",
+      "you just made the pond 80% prettier",
+      "tiny otter now feels fancy",
+      "i am just a baby with a flower",
+      "this matches my vibe perfectly",
+      "flower received. elegance increased.",
+      "i look expensive now",
+      "this is now a luxury otter experience"
+    ];
+
+    const playLines = [
+      "ZOOMIES TIME ✨",
+      "i am legally required to do a silly spin now",
+      "play mode = immediate happiness",
+      "splish splash elite movement incoming",
+      "tiny chaos but in a cute way",
+      "my paws are booked and busy",
+      "we are now doing important otter activities",
+      "this is what joy looks like 🦦",
+      "playtime approved at maximum speed",
+      "i have become unstoppable"
+    ];
+
+    function getUniqueLine(type, sourceArray) {
+      if (type === "tap") {
+        if (tapPool.length === 0) tapPool = shuffleArray(sourceArray);
+        return tapPool.pop();
+      }
+      if (type === "pat") {
+        if (patPool.length === 0) patPool = shuffleArray(sourceArray);
+        return patPool.pop();
+      }
+      if (type === "fish") {
+        if (fishPool.length === 0) fishPool = shuffleArray(sourceArray);
+        return fishPool.pop();
+      }
+      if (type === "flower") {
+        if (flowerPool.length === 0) flowerPool = shuffleArray(sourceArray);
+        return flowerPool.pop();
+      }
+      if (type === "play") {
+        if (playPool.length === 0) playPool = shuffleArray(sourceArray);
+        return playPool.pop();
+      }
+      return sourceArray[Math.floor(Math.random() * sourceArray.length)];
+    }
+
+    // ===== UI HELPERS =====
+    function clamp(val, min, max) {
+      return Math.max(min, Math.min(max, val));
+    }
+
+    function updateMeters() {
+      love = clamp(love, 0, 100);
+      energy = clamp(energy, 0, 100);
+
+      loveFill.style.width = love + "%";
+      energyFill.style.width = energy + "%";
+
+      loveValue.textContent = love + "%";
+      energyValue.textContent = energy + "%";
+
+      autoMoodFromStats();
+    }
+
+    function setMood(mood) {
+      currentMood = mood;
+      moodText.textContent = mood;
+      moodChip.textContent = mood;
+    }
+
+    function autoMoodFromStats() {
+      if (love >= 88 && energy >= 75) {
+        setMood(moods.zoomies);
+      } else if (love >= 85) {
+        setMood(moods.blushing);
+      } else if (energy <= 28) {
+        setMood(moods.sleepy);
+      } else if (energy <= 40) {
+        setMood(moods.hungry);
+      } else if (love >= 75) {
+        setMood(moods.baby);
+      } else {
+        setMood(moods.happy);
+      }
+    }
+
+    function setSpeech(text) {
+      speechBubble.style.opacity = "0.4";
+      speechBubble.style.transform = "translateY(4px)";
+
+      setTimeout(() => {
+        speechBubble.innerHTML = text;
+        speechBubble.style.opacity = "1";
+        speechBubble.style.transform = "translateY(0)";
+      }, 120);
+    }
+
+    function otterReact() {
+      otterWrap.classList.add("react");
+      setTimeout(() => {
+        otterWrap.classList.remove("react");
+      }, 180);
+    }
+
+    function createPopup(emoji, x, y) {
+      const pop = document.createElement("div");
+      pop.classList.add("popup");
+      pop.textContent = emoji;
+      pop.style.left = x + "px";
+      pop.style.top = y + "px";
+      buddyArea.appendChild(pop);
+
+      setTimeout(() => {
+        pop.remove();
+      }, 900);
+    }
+
+    function popupBurst(emojis = ["💗"]) {
+      const rect = otterWrap.getBoundingClientRect();
+      const areaRect = buddyArea.getBoundingClientRect();
+
+      for (let i = 0; i < 3; i++) {
+        const x = rect.left - areaRect.left + rect.width / 2 + (Math.random() * 60 - 30);
+        const y = rect.top - areaRect.top + rect.height / 2 + (Math.random() * 30 - 15);
+        const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+        createPopup(emoji, x, y);
+      }
+    }
+
+    function setAccessory(emoji) {
+      otterAccessory.textContent = emoji;
+    }
+
+    // ===== ACTIONS =====
+    function tapOtter() {
+      setSpeech(getUniqueLine("tap", tapLines));
+      love += 2;
+      energy -= 1;
+      setAccessory("🌸");
+      otterReact();
+      popupBurst(["💗", "🫧", "🌸"]);
+      updateMeters();
+    }
+
+    function patOtter() {
+      setSpeech(getUniqueLine("pat", patLines));
+      love += 8;
+      energy -= 2;
+      setAccessory("💗");
+      otterReact();
+      popupBurst(["💗", "✨", "🤍"]);
+      updateMeters();
+    }
+
+    function feedFish() {
+      setSpeech(getUniqueLine("fish", fishLines));
+      love += 5;
+      energy += 12;
+      setAccessory("🐟");
+      otterReact();
+      popupBurst(["🐟", "💗", "🫧"]);
+      updateMeters();
+    }
+
+    function giveFlower() {
+      setSpeech(getUniqueLine("flower", flowerLines));
+      love += 10;
+      energy += 2;
+      setAccessory("🌸");
+      otterReact();
+      popupBurst(["🌸", "💗", "✨"]);
+      updateMeters();
+    }
+
+    function playTime() {
+      setSpeech(getUniqueLine("play", playLines));
+      love += 6;
+      energy -= 8;
+      setAccessory("✨");
+      otterReact();
+      popupBurst(["✨", "🫧", "💗"]);
+      updateMeters();
+    }
+
+    // ===== NATURAL DECAY / IDLE BEHAVIOR =====
+    setInterval(() => {
+      if (Math.random() < 0.6) {
+        energy -= 1;
+      }
+
+      if (love > 65 && Math.random() < 0.35) {
+        love -= 1;
+      }
+
+      updateMeters();
+
+      if (energy <= 20) {
+        setSpeech("tiny yawn... i may require fish or emotional support 😴");
+        setAccessory("😴");
+      }
+    }, 12000);
+
+    // ===== EVENTS =====
+    otterWrap.addEventListener("click", tapOtter);
+    patBtn.addEventListener("click", patOtter);
+    feedBtn.addEventListener("click", feedFish);
+    flowerBtn.addEventListener("click", giveFlower);
+    playBtn.addEventListener("click", playTime);
+
+    // INIT
+    updateMeters();
+  </script>
+</body>
+</html>
